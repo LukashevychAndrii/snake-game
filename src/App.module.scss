@@ -1,0 +1,7 @@
+@use "./styles/variables" as v;
+
+.main {
+  background-color: v.$c-main;
+  width: 100vw;
+  height: 100vh;
+}
