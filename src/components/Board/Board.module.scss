@@ -1,0 +1,14 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.board {
+  @include m.absolute-center();
+  width: v.$bs-default;
+  height: v.$bs-default;
+  background-color: v.$c-board;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  &__cell {
+    border: 1px solid v.$c-main;
+  }
+}
