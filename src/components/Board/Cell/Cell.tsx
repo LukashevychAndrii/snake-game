@@ -14,7 +14,7 @@ const Cell: React.FC<props> = React.memo(
       if (snakeCell && foodCell) {
         getEatenCell();
       }
-    }, [snakeCell, foodCell]);
+    }, [snakeCell, foodCell, getEatenCell]);
     return (
       <div
         className={`${styles["board__cell"]} ${

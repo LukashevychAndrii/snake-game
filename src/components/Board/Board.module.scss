@@ -10,6 +10,7 @@
   grid-template-columns: repeat(20, 1fr);
   &__cell {
     border: 1px solid v.$c-main;
+    color: rgb(126, 126, 126);
     &--snake {
       background-color: v.$c-snake;
     }

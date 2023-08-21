@@ -13,7 +13,7 @@ class LinkedListNode {
   }
 }
 
-export class LinkedList {
+class LinkedList {
   head: LinkedListNode;
   tail: LinkedListNode;
   constructor(value: number) {
@@ -60,11 +60,12 @@ class Snake {
   }
 }
 
-const createBoard = (): number[][] => {
+const createBoard = ({ map }: { map: Map<number, number> }): number[][] => {
   const cells: number[][] = [];
   for (let i = 0; i < 20; i++) {
     const row: number[] = [];
     for (let j = 0; j < 20; j++) {
+      map.set(i * 20 + j + 1, i + 1);
       row.push(j);
     }
     cells.push(row);
@@ -73,10 +74,17 @@ const createBoard = (): number[][] => {
 };
 
 const Board = () => {
-  const [board] = React.useState(createBoard());
+  const [map] = React.useState(new Map<number, number>(null));
+  const [board] = React.useState(createBoard({ map }));
   const [snakeCells] = React.useState(new Set([44]));
   const [snake] = React.useState(new Snake(44));
   const [foodCells] = React.useState(new Set([55]));
+  const [over, setOver] = React.useState(false);
+
+  React.useEffect(() => {
+    if (over) {
+    }
+  }, [over]);
 
   const arrowPress = useArrowKeyPress();
 
@@ -86,36 +94,57 @@ const Board = () => {
     const interval = setInterval(() => {
       switch (arrowPress) {
         case "left":
+          const prevL = snake.snake.head.val;
+          if (map.get(prevL)! > map.get(prevL - 1)!) {
+            clearInterval(interval);
+            break;
+          }
           snakeCells.delete(snake.snake.tail.val);
           snake.moveLeft();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
           break;
         case "right":
+          const prevR = snake.snake.head.val;
+          if (map.get(prevR)! < map.get(prevR + 1)!) {
+            clearInterval(interval);
+            break;
+          }
           snakeCells.delete(snake.snake.tail.val);
           snake.moveRight();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
           break;
         case "up":
+          const prevU = snake.snake.head.val;
+          if (prevU - 20 < 0) {
+            clearInterval(interval);
+            break;
+          }
           snakeCells.delete(snake.snake.tail.val);
           snake.moveUp();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
           break;
         case "down":
+          const prevD = snake.snake.head.val;
+          if (prevD + 20 > 400) {
+            clearInterval(interval);
+            break;
+          }
           snakeCells.delete(snake.snake.tail.val);
           snake.moveDown();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
           break;
         default:
+          clearInterval(interval);
           break;
       }
     }, 100);
 
     return () => clearInterval(interval);
-  }, [arrowPress, snake, snakeCells, counter]);
+  }, [arrowPress, snake, snakeCells, counter, map]);
 
   const getEatenCell = (): void => {
     snake.snake.addNode(snake.snake.tail.val);
