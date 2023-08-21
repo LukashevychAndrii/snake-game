@@ -13,7 +13,7 @@ class LinkedListNode {
   }
 }
 
-class LinkedList {
+export class LinkedList {
   head: LinkedListNode;
   tail: LinkedListNode;
   constructor(value: number) {
@@ -76,6 +76,7 @@ const Board = () => {
   const [board] = React.useState(createBoard());
   const [snakeCells] = React.useState(new Set([44]));
   const [snake] = React.useState(new Snake(44));
+  const [foodCells] = React.useState(new Set([55]));
 
   const arrowPress = useArrowKeyPress();
 
@@ -116,11 +117,17 @@ const Board = () => {
     return () => clearInterval(interval);
   }, [arrowPress, snake, snakeCells, counter]);
 
+  const getEatenCell = (): void => {
+    snake.snake.addNode(snake.snake.tail.val);
+  };
+
   return (
     <div className={styles["board"]}>
       {board.map((row, rowIndex) =>
         row.map((cell, cellIndex) => (
           <Cell
+            getEatenCell={getEatenCell}
+            foodCell={foodCells.has(rowIndex * 20 + cellIndex + 1)}
             snakeCell={snakeCells.has(rowIndex * 20 + cellIndex + 1)}
             pos={rowIndex * 20 + cellIndex + 1}
             key={rowIndex + cellIndex}
