@@ -16,11 +16,15 @@ class LinkedListNode {
 class LinkedList {
   head: LinkedListNode;
   tail: LinkedListNode;
-  last: number;
   constructor(value: number) {
     this.head = new LinkedListNode(value);
-    this.tail = new LinkedListNode(value);
-    this.last = value;
+    this.tail = this.head;
+  }
+
+  addNode(val: number): void {
+    const tailNew = new LinkedListNode(val);
+    tailNew.next = this.tail;
+    this.tail = tailNew;
   }
 }
 
@@ -31,16 +35,28 @@ class Snake {
   }
 
   moveLeft() {
-    this.snake.head = new LinkedListNode(this.snake.head.val - 1);
+    this.updateTailValues();
+    this.snake.head.val = this.snake.head.val - 1;
   }
   moveRight() {
-    this.snake.head = new LinkedListNode(this.snake.head.val + 1);
+    this.updateTailValues();
+    this.snake.head.val = this.snake.head.val + 1;
   }
   moveUp() {
-    this.snake.head = new LinkedListNode(this.snake.head.val - 20);
+    this.updateTailValues();
+    this.snake.head.val = this.snake.head.val - 20;
   }
   moveDown() {
-    this.snake.head = new LinkedListNode(this.snake.head.val + 20);
+    this.updateTailValues();
+    this.snake.head.val = this.snake.head.val + 20;
+  }
+
+  updateTailValues(): void {
+    let tail = this.snake.tail;
+    while (tail.next) {
+      tail.val = tail.next.val;
+      tail = tail.next;
+    }
   }
 }
 
@@ -69,25 +85,25 @@ const Board = () => {
     const interval = setInterval(() => {
       switch (arrowPress) {
         case "left":
-          snakeCells.delete(snake.snake.head.val);
+          snakeCells.delete(snake.snake.tail.val);
           snake.moveLeft();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
           break;
         case "right":
-          snakeCells.delete(snake.snake.head.val);
+          snakeCells.delete(snake.snake.tail.val);
           snake.moveRight();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
           break;
         case "up":
-          snakeCells.delete(snake.snake.head.val);
+          snakeCells.delete(snake.snake.tail.val);
           snake.moveUp();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
           break;
         case "down":
-          snakeCells.delete(snake.snake.head.val);
+          snakeCells.delete(snake.snake.tail.val);
           snake.moveDown();
           snakeCells.add(snake.snake.head.val);
           setCounter((prev) => ++prev);
