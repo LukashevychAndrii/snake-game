@@ -10,5 +10,8 @@
   grid-template-columns: repeat(20, 1fr);
   &__cell {
     border: 1px solid v.$c-main;
+    &__snake {
+      background-color: bisque;
+    }
   }
 }
