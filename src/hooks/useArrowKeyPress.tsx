@@ -1,40 +1,53 @@
-import { useEffect, useState } from "react";
+import React from "react";
 
-function useArrowKeyPress(): "left" | "up" | "right" | "down" | null {
-  const [direction, setDirection] = useState<
-    "left" | "up" | "right" | "down" | null
-  >(null);
+export type direction = "left" | "up" | "right" | "down";
+
+function useArrowKeyPress(): direction | null {
+  const direction = React.useRef<direction | null>(null);
+  const [, setCounter] = React.useState(0);
 
   const handleArrowKeys = (event: KeyboardEvent) => {
     if (event.key.startsWith("Arrow")) {
       switch (event.key) {
         case "ArrowLeft":
-          setDirection("left");
+          if (direction.current !== "right") {
+            direction.current = "left";
+            setCounter((prev) => ++prev);
+          }
           break;
         case "ArrowUp":
-          setDirection("up");
+          if (direction.current !== "down") {
+            direction.current = "up";
+            setCounter((prev) => ++prev);
+          }
           break;
         case "ArrowRight":
-          setDirection("right");
+          if (direction.current !== "left") {
+            direction.current = "right";
+            setCounter((prev) => ++prev);
+          }
           break;
         case "ArrowDown":
-          setDirection("down");
+          if (direction.current !== "up") {
+            direction.current = "down";
+            setCounter((prev) => ++prev);
+          }
           break;
         default:
-          setDirection(null);
+          direction.current = null;
           break;
       }
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.addEventListener("keydown", handleArrowKeys);
     return () => {
       document.removeEventListener("keydown", handleArrowKeys);
     };
   }, []);
 
-  return direction;
+  return direction.current;
 }
 
 export default useArrowKeyPress;
