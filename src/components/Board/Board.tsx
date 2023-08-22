@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./Board.module.scss";
 import Cell from "./Cell/Cell";
 import useArrowKeyPress from "../../hooks/useArrowKeyPress";
+import createBoard from "../../utils/createBoard";
+import getRandomCell from "../../utils/getRandomCell";
 
 class LinkedListNode {
   val: number;
@@ -60,26 +62,33 @@ class Snake {
   }
 }
 
-const createBoard = ({ map }: { map: Map<number, number> }): number[][] => {
-  const cells: number[][] = [];
-  for (let i = 0; i < 20; i++) {
-    const row: number[] = [];
-    for (let j = 0; j < 20; j++) {
-      map.set(i * 20 + j + 1, i + 1);
-      row.push(j);
-    }
-    cells.push(row);
-  }
-  return cells;
-};
-
 const Board = () => {
-  const [map] = React.useState(new Map<number, number>(null));
-  const [board] = React.useState(createBoard({ map }));
+  const [counter, setCounter] = React.useState(0);
+  const [cellsRows] = React.useState(new Map<number, number>(null));
+  const [emptyCells] = React.useState(new Set<number>());
+  const [board] = React.useState(createBoard({ cellsRows, emptyCells }));
   const [snakeCells] = React.useState(new Set([44]));
   const [snake] = React.useState(new Snake(44));
   const [foodCells] = React.useState(new Set([55]));
-  const [over, setOver] = React.useState(false);
+  const [over, setOver] = React.useState(true);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("asd");
+      const newFoodCell = getRandomCell({ emptyCells });
+      foodCells.add(newFoodCell);
+    }, 1000);
+
+    if (over) {
+      clearInterval(interval);
+    }
+    if (foodCells.size === 0) {
+      const newFoodCell = getRandomCell({ emptyCells });
+      foodCells.add(newFoodCell);
+    }
+
+    return () => clearInterval(interval);
+  }, [emptyCells, foodCells, over, counter]);
 
   React.useEffect(() => {
     if (over) {
@@ -88,14 +97,12 @@ const Board = () => {
 
   const arrowPress = useArrowKeyPress();
 
-  const [counter, setCounter] = React.useState(0);
-
   React.useEffect(() => {
     const interval = setInterval(() => {
       switch (arrowPress) {
         case "left":
           const prevL = snake.snake.head.val;
-          if (map.get(prevL)! > map.get(prevL - 1)!) {
+          if (cellsRows.get(prevL)! > cellsRows.get(prevL - 1)!) {
             clearInterval(interval);
             break;
           }
@@ -106,7 +113,7 @@ const Board = () => {
           break;
         case "right":
           const prevR = snake.snake.head.val;
-          if (map.get(prevR)! < map.get(prevR + 1)!) {
+          if (cellsRows.get(prevR)! < cellsRows.get(prevR + 1)!) {
             clearInterval(interval);
             break;
           }
@@ -144,10 +151,12 @@ const Board = () => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [arrowPress, snake, snakeCells, counter, map]);
+  }, [arrowPress, snake, snakeCells, counter, cellsRows]);
 
   const getEatenCell = (): void => {
     snake.snake.addNode(snake.snake.tail.val);
+    foodCells.delete(snake.snake.head.val);
+    emptyCells.add(snake.snake.head.val);
   };
 
   return (
