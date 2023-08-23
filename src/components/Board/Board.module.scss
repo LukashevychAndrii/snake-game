@@ -8,6 +8,7 @@
   background-color: v.$c-board;
   display: grid;
   grid-template-columns: repeat(20, 1fr);
+  z-index: 10;
   &__cell {
     border: 1px solid v.$c-main;
     color: rgb(126, 126, 126);

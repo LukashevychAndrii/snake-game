@@ -1,10 +1,13 @@
 import React from "react";
+import { gameState } from "../components/Board/Board";
 
 export type direction = "left" | "up" | "right" | "down";
 
-function useArrowKeyPress(): direction | null {
+function useArrowKeyPress(gameState: gameState): direction | null {
   const direction = React.useRef<direction | null>(null);
   const [, setCounter] = React.useState(0);
+
+  if (gameState === "end") direction.current = null;
 
   const handleArrowKeys = (event: KeyboardEvent) => {
     if (event.key.startsWith("Arrow")) {

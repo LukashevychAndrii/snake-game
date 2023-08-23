@@ -1,0 +1,20 @@
+@use "../../../../styles/mixins" as m;
+
+.start {
+  &__wrapper {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 100;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    cursor: pointer;
+  }
+  &__button {
+    @include m.absolute-center();
+    font-size: 7.5rem;
+    background-color: inherit;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+}
