@@ -70,7 +70,7 @@ export type gameState = "start" | "playing" | "end";
 const Board = () => {
   const [counter, setCounter] = React.useState(0);
   const [cellsRows] = React.useState(new Map<number, number>(null));
-  const [snake, setSnake] = React.useState<Snake>(new Snake(-1));
+  const [snake, setSnake] = React.useState<Snake>(new Snake(2));
   const [snakeCells] = React.useState(new Set());
   const [foodCells] = React.useState(new Set());
   const [emptyCells] = React.useState(new Set<number>());
@@ -108,6 +108,7 @@ const Board = () => {
     if (arrowPress) {
       setGameState("playing");
     }
+
     const interval = setInterval(() => {
       switch (arrowPress) {
         case "left":
@@ -189,7 +190,9 @@ const Board = () => {
           break;
       }
     }, 50);
-
+    if (snake.snake.head.val < 0 || snake.snake.head.val > 400) {
+      setGameState("end");
+    }
     return () => clearInterval(interval);
   }, [
     arrowPress,
@@ -209,7 +212,7 @@ const Board = () => {
       setSnake(new Snake(randomNumber));
     } else if (gameState === "end") {
       console.log("end");
-      setSnake(new Snake(-1));
+      setSnake(new Snake(1));
       snakeCells.clear();
     }
   }, [gameState, snakeCells]);
