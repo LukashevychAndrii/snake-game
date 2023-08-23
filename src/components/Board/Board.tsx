@@ -82,14 +82,15 @@ const Board = () => {
 
   // ! FOOD
   React.useEffect(() => {
+    if (gameState === "start" || gameState === "end") {
+      foodCells.clear();
+      return;
+    }
     const interval = setInterval(() => {
       const newFoodCell = getRandomCell({ emptyCells });
       foodCells.add(newFoodCell);
     }, 1000);
 
-    if (gameState === "start" || gameState === "end") {
-      clearInterval(interval);
-    }
     if (foodCells.size === 0) {
       const newFoodCell = getRandomCell({ emptyCells });
       foodCells.add(newFoodCell);
