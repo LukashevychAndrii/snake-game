@@ -103,7 +103,6 @@ const Board = () => {
   // ! SNAKE
 
   React.useEffect(() => {
-    console.log(arrowPress);
     if (gameState === "end") return;
     if (arrowPress) {
       setGameState("playing");
@@ -120,6 +119,10 @@ const Board = () => {
           snakeCells.delete(snake.snake.tail.val);
           emptyCells.add(snake.snake.tail.val);
           snake.moveLeft();
+          if (snakeCells.has(snake.snake.head.val)) {
+            setGameState("end");
+            break;
+          }
           snakeCells.add(snake.snake.head.val);
           emptyCells.delete(snake.snake.head.val);
           setCounter((prev) => ++prev);
@@ -134,6 +137,10 @@ const Board = () => {
           snakeCells.delete(snake.snake.tail.val);
           emptyCells.add(snake.snake.tail.val);
           snake.moveRight();
+          if (snakeCells.has(snake.snake.head.val)) {
+            setGameState("end");
+            break;
+          }
           snakeCells.add(snake.snake.head.val);
           emptyCells.delete(snake.snake.head.val);
           setCounter((prev) => ++prev);
@@ -145,9 +152,14 @@ const Board = () => {
             setGameState("end");
             break;
           }
+
           snakeCells.delete(snake.snake.tail.val);
           emptyCells.add(snake.snake.tail.val);
           snake.moveUp();
+          if (snakeCells.has(snake.snake.head.val)) {
+            setGameState("end");
+            break;
+          }
           snakeCells.add(snake.snake.head.val);
           emptyCells.delete(snake.snake.head.val);
           setCounter((prev) => ++prev);
@@ -159,9 +171,14 @@ const Board = () => {
             setGameState("end");
             break;
           }
+
           snakeCells.delete(snake.snake.tail.val);
           emptyCells.add(snake.snake.tail.val);
           snake.moveDown();
+          if (snakeCells.has(snake.snake.head.val)) {
+            setGameState("end");
+            break;
+          }
           snakeCells.add(snake.snake.head.val);
           emptyCells.delete(snake.snake.head.val);
           setCounter((prev) => ++prev);
