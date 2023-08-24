@@ -17,6 +17,7 @@ const End: React.FC<props> = ({ getGameState, end }) => {
         <>
           <div className={styles["end"]}>You lost!</div>
           <button
+            autoFocus
             onClick={() => {
               getGameState("start");
             }}
@@ -30,6 +31,7 @@ const End: React.FC<props> = ({ getGameState, end }) => {
         <>
           <div className={styles["end"]}>You won!</div>
           <button
+            autoFocus
             onClick={() => {
               getGameState("start");
             }}
