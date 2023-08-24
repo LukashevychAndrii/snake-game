@@ -4,9 +4,11 @@ import Cell from "./Cell/Cell";
 import useArrowKeyPress from "../../hooks/useArrowKeyPress";
 import createBoard from "../../utils/createBoard";
 import getRandomCell from "../../utils/getRandomCell";
-import Start from "./GameState/Start/Start";
 import End from "./GameState/End/End";
 import getRandomNumber from "../../utils/getRandomNumber";
+import Header from "./Header/Header";
+import { BoardContext } from "../../Context/boardContext";
+import useSetScoreMax from "../../hooks/useSetScoreMax";
 
 class LinkedListNode {
   val: number;
@@ -68,6 +70,7 @@ class Snake {
 export type gameState = "start" | "playing" | "end";
 
 const Board = () => {
+  useSetScoreMax();
   const [counter, setCounter] = React.useState(0);
   const [cellsRows] = React.useState(new Map<number, number>(null));
   const [snake, setSnake] = React.useState<Snake>(new Snake(2));
@@ -80,10 +83,14 @@ const Board = () => {
   );
   const [gameState, setGameState] = React.useState<gameState>("start");
 
+  const updateScoreCurrent = React.useContext(BoardContext).updateScoreCurrent;
+  const updateScoreMax = React.useContext(BoardContext).updateScoreMax;
   // ! FOOD
   React.useEffect(() => {
     if (gameState === "start" || gameState === "end") {
       foodCells.clear();
+      updateScoreMax();
+      updateScoreCurrent(0);
       return;
     }
     const interval = setInterval(() => {
@@ -97,7 +104,14 @@ const Board = () => {
     }
 
     return () => clearInterval(interval);
-  }, [emptyCells, foodCells, gameState, counter]);
+  }, [
+    emptyCells,
+    foodCells,
+    gameState,
+    counter,
+    updateScoreCurrent,
+    updateScoreMax,
+  ]);
 
   const arrowPress = useArrowKeyPress(gameState);
 
@@ -220,6 +234,7 @@ const Board = () => {
   const getEatenCell = (): void => {
     snake.snake.addNode(snake.snake.tail.val);
     foodCells.delete(snake.snake.head.val);
+    updateScoreCurrent(snakeCells.size);
   };
 
   const getGameState = (state: gameState): void => {
@@ -227,7 +242,8 @@ const Board = () => {
   };
 
   return (
-    <>
+    <div className={styles["board__wrapper"]}>
+      <Header />
       <div className={styles["board"]}>
         {board.map((row, rowIndex) =>
           row.map((cell, cellIndex) => (
@@ -243,7 +259,7 @@ const Board = () => {
       </div>
       {/* {gameState === "start" && <Start getGameState={getGameState} />} */}
       {gameState === "end" && <End getGameState={getGameState} />}
-    </>
+    </div>
   );
 };
 
