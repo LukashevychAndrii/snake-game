@@ -203,7 +203,12 @@ const Board = () => {
         )}
       </div>
       {/* {gameState === "start" && <Start getGameState={getGameState} />} */}
-      {gameState === "end" && <End getGameState={getGameState} />}
+      {gameState === "end" && (
+        <End
+          end={emptyCells.size === 0 ? "win" : "loss"}
+          getGameState={getGameState}
+        />
+      )}
     </div>
   );
 };
