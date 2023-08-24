@@ -5,7 +5,6 @@ interface params {
 
 const createBoard = ({ cellsRows, emptyCells }: params): number[][] => {
   const cells: number[][] = [];
-  console.log("board");
   for (let i = 0; i < 20; i++) {
     const row: number[] = [];
     for (let j = 0; j < 20; j++) {

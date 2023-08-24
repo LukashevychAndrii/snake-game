@@ -9,63 +9,7 @@ import getRandomNumber from "../../utils/getRandomNumber";
 import Header from "./Header/Header";
 import { BoardContext } from "../../Context/boardContext";
 import useSetScoreMax from "../../hooks/useSetScoreMax";
-
-class LinkedListNode {
-  val: number;
-  next: LinkedListNode | null;
-
-  constructor(value: number) {
-    this.val = value;
-    this.next = null;
-  }
-}
-
-class LinkedList {
-  head: LinkedListNode;
-  tail: LinkedListNode;
-  constructor(value: number) {
-    this.head = new LinkedListNode(value);
-    this.tail = this.head;
-  }
-
-  addNode(val: number): void {
-    const tailNew = new LinkedListNode(val);
-    tailNew.next = this.tail;
-    this.tail = tailNew;
-  }
-}
-
-class Snake {
-  snake: LinkedList;
-  constructor(value: number) {
-    this.snake = new LinkedList(value);
-  }
-
-  moveLeft() {
-    this.updateTailValues();
-    this.snake.head.val = this.snake.head.val - 1;
-  }
-  moveRight() {
-    this.updateTailValues();
-    this.snake.head.val = this.snake.head.val + 1;
-  }
-  moveUp() {
-    this.updateTailValues();
-    this.snake.head.val = this.snake.head.val - 20;
-  }
-  moveDown() {
-    this.updateTailValues();
-    this.snake.head.val = this.snake.head.val + 20;
-  }
-
-  updateTailValues(): void {
-    let tail = this.snake.tail;
-    while (tail.next) {
-      tail.val = tail.next.val;
-      tail = tail.next;
-    }
-  }
-}
+import { Snake } from "../../classes/Snake";
 
 export type gameState = "start" | "playing" | "end";
 
@@ -121,6 +65,9 @@ const Board = () => {
     if (gameState === "end") return;
     if (arrowPress) {
       setGameState("playing");
+    }
+    if (snake.snake.head.val < 0 || snake.snake.head.val > 400) {
+      setGameState("end");
     }
 
     const interval = setInterval(() => {
@@ -203,10 +150,8 @@ const Board = () => {
           clearInterval(interval);
           break;
       }
-    }, 50);
-    if (snake.snake.head.val < 0 || snake.snake.head.val > 400) {
-      setGameState("end");
-    }
+    }, 100);
+
     return () => clearInterval(interval);
   }, [
     arrowPress,
