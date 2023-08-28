@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../Board.module.scss";
+import { BoardContext } from "../../../Context/board-context";
 
 interface props {
   pos: number;
@@ -15,8 +16,22 @@ const Cell: React.FC<props> = React.memo(
         getEatenCell();
       }
     }, [snakeCell, foodCell, getEatenCell]);
+
+    const { boardFoodColor, boardSnakeColor, boardColor } =
+      React.useContext(BoardContext).boardSettings;
+
     return (
       <div
+        style={{
+          backgroundColor:
+            snakeCell && boardSnakeColor !== "default"
+              ? boardSnakeColor
+              : foodCell && boardFoodColor !== "default"
+              ? boardFoodColor
+              : !snakeCell && !foodCell && boardColor !== "default"
+              ? boardColor
+              : "",
+        }}
         className={`${styles["board__cell"]} ${
           snakeCell ? styles["board__cell--snake"] : ""
         } ${foodCell ? styles["board__cell--food"] : ""}`}

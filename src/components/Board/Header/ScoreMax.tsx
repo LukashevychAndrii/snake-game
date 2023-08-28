@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./Header.module.scss";
 
-import { BoardContext } from "../../../Context/boardContext";
+import { BoardContext } from "../../../Context/board-context";
 
 const ScoreMax = () => {
   const [isAnimating, setIsAnimating] = React.useState(false);
 
-  const scoreMax = React.useContext(BoardContext).scoreMax;
+  const { scoreMax } = React.useContext(BoardContext);
 
   React.useEffect(() => {
     setIsAnimating(true);

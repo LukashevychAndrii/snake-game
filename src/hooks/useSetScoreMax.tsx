@@ -1,16 +1,15 @@
 import React from "react";
-import { BoardContext } from "../Context/boardContext";
+import { BoardContext } from "../Context/board-context";
 
 const useSetScoreMax = (): void => {
-  const updateScoreMax = React.useContext(BoardContext).updateScoreMax;
+  const { updateScoreMax } = React.useContext(BoardContext);
 
   React.useEffect(() => {
     const usersMaxScore = localStorage.getItem("snakeGameMaxCounter");
     if (usersMaxScore) {
-      console.log(+usersMaxScore);
       updateScoreMax(+usersMaxScore);
     }
-  }, [updateScoreMax]);
+  }, []);
 };
 
 export default useSetScoreMax;

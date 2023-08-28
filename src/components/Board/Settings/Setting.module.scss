@@ -1,0 +1,93 @@
+@use "../../../styles/variables" as v;
+@use "../../../styles/mixins" as m;
+@use "../../../styles/animations";
+@use "../../../styles/components";
+
+.settings {
+  @include m.absolute-center();
+  width: 70rem;
+  height: 80rem;
+  background-color: v.$c-settings;
+  z-index: 1000;
+  padding: 0 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  &--hidden {
+    animation: hide 0.4s forwards;
+  }
+  &--shown {
+    animation: show 0.4s forwards;
+  }
+  &__heading {
+    text-align: center;
+    color: v.$c-light;
+    font-size: 3.5rem;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 1vw;
+    top: 1vw;
+    fill: v.$c-light;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.4s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  &__variant--1,
+  &__variant--2 {
+    display: flex;
+    justify-content: space-between;
+    color: v.$c-light;
+    font-size: v.$f-default;
+  }
+  &__variant--1 {
+    & > form {
+      position: relative;
+      & > input {
+        display: none;
+      }
+      & > input:not(:checked) ~ ul {
+        opacity: 0;
+        pointer-events: none;
+        user-select: none;
+      }
+      & > label {
+        padding: 0.4rem 2rem;
+        border: 1px solid;
+        display: flex;
+        gap: 2rem;
+        cursor: pointer;
+      }
+
+      & > ul {
+        position: absolute;
+        list-style: none;
+        transition: opacity 0.4s;
+        width: 100%;
+        z-index: 1500;
+        & > li {
+          text-align: center;
+          border: 1px solid;
+          cursor: pointer;
+          transition: all 0.4s;
+          background-color: v.$c-settings;
+          &:hover {
+            background-color: v.$c-main;
+          }
+        }
+      }
+    }
+    &__chevron-down {
+      fill: v.$c-light;
+      width: 1.5rem;
+    }
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+}

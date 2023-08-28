@@ -7,9 +7,12 @@ import getRandomCell from "../../utils/getRandomCell";
 import End from "./GameState/End/End";
 import getRandomNumber from "../../utils/getRandomNumber";
 import Header from "./Header/Header";
-import { BoardContext } from "../../Context/boardContext";
+import { BoardContext } from "../../Context/board-context";
 import useSetScoreMax from "../../hooks/useSetScoreMax";
 import { Snake } from "../../classes/Snake";
+import Settings from "./Settings/Settings";
+import useGetSnakeSpeed from "../../hooks/useGetSnakeSpeed";
+import useGetBoardSize from "../../hooks/useGetBoardSize";
 
 export type gameState = "start" | "playing" | "end";
 
@@ -27,8 +30,9 @@ const Board = () => {
   );
   const [gameState, setGameState] = React.useState<gameState>("start");
 
-  const updateScoreCurrent = React.useContext(BoardContext).updateScoreCurrent;
-  const updateScoreMax = React.useContext(BoardContext).updateScoreMax;
+  const { updateScoreMax, updateScoreCurrent } = React.useContext(BoardContext);
+  const boardSnakeSpeed = useGetSnakeSpeed();
+  const boardSize = useGetBoardSize();
   // ! FOOD
   React.useEffect(() => {
     if (gameState === "start" || gameState === "end") {
@@ -48,14 +52,7 @@ const Board = () => {
     }
 
     return () => clearInterval(interval);
-  }, [
-    emptyCells,
-    foodCells,
-    gameState,
-    counter,
-    updateScoreCurrent,
-    updateScoreMax,
-  ]);
+  }, [emptyCells, foodCells, gameState, counter]);
 
   const arrowPress = useArrowKeyPress(gameState);
 
@@ -69,7 +66,6 @@ const Board = () => {
     if (snake.snake.head.val < 0 || snake.snake.head.val > 400) {
       setGameState("end");
     }
-
     const interval = setInterval(() => {
       switch (arrowPress) {
         case "left":
@@ -150,7 +146,7 @@ const Board = () => {
           clearInterval(interval);
           break;
       }
-    }, 100);
+    }, boardSnakeSpeed);
 
     return () => clearInterval(interval);
   }, [
@@ -161,6 +157,7 @@ const Board = () => {
     cellsRows,
     gameState,
     emptyCells,
+    boardSnakeSpeed,
   ]);
 
   React.useEffect(() => {
@@ -187,29 +184,31 @@ const Board = () => {
   };
 
   return (
-    <div className={styles["board__wrapper"]}>
-      <Header />
-      <div className={styles["board"]}>
-        {board.map((row, rowIndex) =>
-          row.map((cell, cellIndex) => (
-            <Cell
-              getEatenCell={getEatenCell}
-              foodCell={foodCells.has(rowIndex * 20 + cellIndex + 1)}
-              snakeCell={snakeCells.has(rowIndex * 20 + cellIndex + 1)}
-              pos={rowIndex * 20 + cellIndex + 1}
-              key={rowIndex + cellIndex}
-            />
-          ))
+    <>
+      <div className={styles["board__wrapper"]}>
+        <Header />
+        <div className={styles["board"]}>
+          {board.map((row, rowIndex) =>
+            row.map((cell, cellIndex) => (
+              <Cell
+                getEatenCell={getEatenCell}
+                foodCell={foodCells.has(rowIndex * 20 + cellIndex + 1)}
+                snakeCell={snakeCells.has(rowIndex * 20 + cellIndex + 1)}
+                pos={rowIndex * 20 + cellIndex + 1}
+                key={rowIndex + cellIndex}
+              />
+            ))
+          )}
+        </div>
+        {gameState === "end" && (
+          <End
+            end={emptyCells.size === 0 ? "win" : "loss"}
+            getGameState={getGameState}
+          />
         )}
       </div>
-      {/* {gameState === "start" && <Start getGameState={getGameState} />} */}
-      {gameState === "end" && (
-        <End
-          end={emptyCells.size === 0 ? "win" : "loss"}
-          getGameState={getGameState}
-        />
-      )}
-    </div>
+      <Settings />
+    </>
   );
 };
 

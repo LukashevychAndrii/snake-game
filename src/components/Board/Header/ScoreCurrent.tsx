@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./Header.module.scss";
-import { BoardContext } from "../../../Context/boardContext";
+import { BoardContext } from "../../../Context/board-context";
 
 const ScoreCurrent = () => {
   const [isAnimating, setIsAnimating] = React.useState(false);
 
-  const scoreCurrent = React.useContext(BoardContext).scoreCurrent;
+  const { scoreCurrent } = React.useContext(BoardContext);
 
   React.useEffect(() => {
     setIsAnimating(true);
