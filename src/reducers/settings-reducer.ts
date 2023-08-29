@@ -9,7 +9,7 @@ type Action =
   | { type: "SET_BOARD_SNAKE_COLOR"; payload: color | "default" }
   | { type: "SET_BOARD_SIZE"; payload: boardSize | "default" }
   | { type: "SET_BOARD_SNAKE_SPEED"; payload: boardSnakeSpeed | "default" }
-  | { type: "DISCARD_CHANGES"; payload: "default" };
+  | { type: "DISCARD_CHANGES"; payload: BoardSettingsI };
 
 export function settingsReducer(state: BoardSettingsI, action: Action) {
   switch (action.type) {
@@ -45,11 +45,11 @@ export function settingsReducer(state: BoardSettingsI, action: Action) {
     }
     case "DISCARD_CHANGES": {
       return {
-        boardSize: action.payload,
-        boardFoodColor: action.payload,
-        boardColor: action.payload,
-        boardSnakeColor: action.payload,
-        boardSnakeSpeed: action.payload,
+        boardSize: action.payload.boardSize,
+        boardFoodColor: action.payload.boardFoodColor,
+        boardColor: action.payload.boardColor,
+        boardSnakeColor: action.payload.boardSnakeColor,
+        boardSnakeSpeed: action.payload.boardSnakeSpeed,
       };
     }
     default: {

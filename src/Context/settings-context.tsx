@@ -14,7 +14,7 @@ interface settings {
   updateBoardSnakeSpeed: (
     newBoardSnakeSpeed: boardSnakeSpeed | "default"
   ) => void;
-  discardChanges: () => void;
+  discardChanges: (changes: BoardSettingsI) => void;
 }
 
 export const initialBoardSettingsState: settings = {
@@ -63,8 +63,8 @@ export const SettingsProvider = ({
   const updateSnakeColor = (newSnakeColor: color | "default") => {
     dispatch({ type: "SET_BOARD_SNAKE_COLOR", payload: newSnakeColor });
   };
-  const discardChanges = () => {
-    dispatch({ type: "DISCARD_CHANGES", payload: "default" });
+  const discardChanges = (changes: BoardSettingsI) => {
+    dispatch({ type: "DISCARD_CHANGES", payload: changes });
   };
   return (
     <SettingsContext.Provider

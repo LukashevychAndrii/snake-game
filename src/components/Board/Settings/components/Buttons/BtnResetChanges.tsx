@@ -9,7 +9,13 @@ const BtnResetChanges = () => {
 
   const btnResetClick = () => {
     resetSettings();
-    discardChanges();
+    discardChanges({
+      boardColor: "default",
+      boardFoodColor: "default",
+      boardSize: "default",
+      boardSnakeColor: "default",
+      boardSnakeSpeed: "default",
+    });
   };
   return (
     <button onClick={btnResetClick} className={styles["btn"]}>
