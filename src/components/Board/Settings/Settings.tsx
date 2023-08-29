@@ -10,6 +10,7 @@ import BtnAcceptChanges from "./components/Buttons/BtnAcceptChanges";
 import SettingsBoardColor from "./components/SettingsBoardColor";
 import BtnDiscardChanges from "./components/Buttons/BtnDiscardChanges";
 import BtnResetChanges from "./components/Buttons/BtnResetChanges";
+import useClickOutside from "../../../hooks/useClickOutside";
 
 type animation = "hidden" | "shown";
 
@@ -28,6 +29,15 @@ const Settings = () => {
     setShowSettings(true);
   };
 
+  const ref = React.useRef(null);
+  const outside = useClickOutside(ref);
+
+  React.useEffect(() => {
+    if (outside) {
+      hide();
+    }
+  }, [outside]);
+
   return (
     <>
       <SettingsIcon
@@ -39,6 +49,7 @@ const Settings = () => {
       ></SettingsIcon>
       {showSettings && (
         <div
+          ref={ref}
           className={`${styles["settings"]} ${
             styles[`settings--${animation}`]
           }`}
