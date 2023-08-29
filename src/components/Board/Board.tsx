@@ -164,6 +164,7 @@ const Board = () => {
     if (gameState === "start") {
       console.log("start");
       const randomNumber = getRandomNumber(1, 400);
+      snakeCells.clear();
       snakeCells.add(randomNumber);
       setSnake(new Snake(randomNumber));
     } else if (gameState === "end") {
