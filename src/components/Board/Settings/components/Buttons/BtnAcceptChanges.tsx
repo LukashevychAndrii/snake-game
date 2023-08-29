@@ -2,33 +2,30 @@ import React from "react";
 import styles from "../../Setting.module.scss";
 import { BoardContext } from "../../../../../Context/board-context";
 import { SettingsContext } from "../../../../../Context/settings-context";
+import useGetSettingsChanged from "../../../../../hooks/useGetSettingsChanged";
 
 const BtnAcceptChanges = () => {
   const { updateBoardSettings } = React.useContext(BoardContext);
-  const {
-    boardColor,
-    boardFoodColor,
-    boardSize,
-    boardSnakeColor,
-    boardSnakeSpeed,
-  } = React.useContext(SettingsContext);
+  const { boardSettings } = React.useContext(SettingsContext);
 
   const newSettings = React.useMemo(() => {
     return {
-      boardColor,
-      boardFoodColor,
-      boardSize,
-      boardSnakeColor,
-      boardSnakeSpeed,
+      boardSettings,
     };
-  }, [boardColor, boardFoodColor, boardSize, boardSnakeColor, boardSnakeSpeed]);
+  }, [boardSettings]);
 
   const btnAcceptClick = (): void => {
-    updateBoardSettings(newSettings);
+    updateBoardSettings(newSettings.boardSettings);
   };
 
+  const changed = useGetSettingsChanged();
+
   return (
-    <button onClick={btnAcceptClick} className={styles["btn"]}>
+    <button
+      disabled={changed}
+      onClick={btnAcceptClick}
+      className={styles["btn"]}
+    >
       Accept Changes
     </button>
   );

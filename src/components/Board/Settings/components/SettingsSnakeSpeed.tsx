@@ -29,7 +29,7 @@ const SnakeSpeedVariants = () => {
 };
 
 const SettingsSnakeSpeed = () => {
-  const { boardSnakeSpeed } = React.useContext(SettingsContext);
+  const { boardSnakeSpeed } = React.useContext(SettingsContext).boardSettings;
   const { boardSnakeSpeed: boardSnakeSpeed_g } =
     React.useContext(BoardContext).boardSettings;
   const { boardSnakeSpeed__DEFAULT } = getDefaultSettings();

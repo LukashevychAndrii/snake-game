@@ -45,9 +45,9 @@ export function settingsReducer(state: BoardSettingsI, action: Action) {
     }
     case "DISCARD_CHANGES": {
       return {
-        boardColor: action.payload,
-        boardFoodColor: action.payload,
         boardSize: action.payload,
+        boardFoodColor: action.payload,
+        boardColor: action.payload,
         boardSnakeColor: action.payload,
         boardSnakeSpeed: action.payload,
       };

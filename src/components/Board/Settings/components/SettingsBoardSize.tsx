@@ -30,7 +30,7 @@ const BoardSizeVariants = () => {
 };
 
 const SettingsBoardSize = () => {
-  const { boardSize } = React.useContext(SettingsContext);
+  const { boardSize } = React.useContext(SettingsContext).boardSettings;
 
   const { boardSize__DEFAULT } = getDefaultSettings();
 

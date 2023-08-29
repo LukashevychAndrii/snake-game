@@ -5,7 +5,8 @@ import { color } from "../types/color";
 import { boardSize } from "../types/boardSize";
 import { boardSnakeSpeed } from "../types/boardSnakeSpeed";
 
-interface settings extends BoardSettingsI {
+interface settings {
+  boardSettings: BoardSettingsI;
   updateBoardColor: (newBoardColor: color | "default") => void;
   updateFoodColor: (newFoodColor: color | "default") => void;
   updateSnakeColor: (newSnakeColor: color | "default") => void;
@@ -17,11 +18,13 @@ interface settings extends BoardSettingsI {
 }
 
 export const initialBoardSettingsState: settings = {
-  boardColor: "default",
-  boardFoodColor: "default",
-  boardSize: "default",
-  boardSnakeColor: "default",
-  boardSnakeSpeed: "default",
+  boardSettings: {
+    boardSize: "default",
+    boardColor: "default",
+    boardFoodColor: "default",
+    boardSnakeColor: "default",
+    boardSnakeSpeed: "default",
+  },
   updateBoardColor: () => {},
   updateBoardSize: () => {},
   updateBoardSnakeSpeed: () => {},
@@ -41,7 +44,7 @@ export const SettingsProvider = ({
 }) => {
   const [state, dispatch] = React.useReducer(
     settingsReducer,
-    initialBoardSettingsState
+    initialBoardSettingsState.boardSettings
   );
   const updateBoardColor = (newBoardColor: color | "default") => {
     dispatch({ type: "SET_BOARD_COLOR", payload: newBoardColor });
@@ -66,11 +69,13 @@ export const SettingsProvider = ({
   return (
     <SettingsContext.Provider
       value={{
-        boardColor: state.boardColor,
-        boardFoodColor: state.boardFoodColor,
-        boardSize: state.boardSize,
-        boardSnakeColor: state.boardSnakeColor,
-        boardSnakeSpeed: state.boardSnakeSpeed,
+        boardSettings: {
+          boardSize: state.boardSize,
+          boardColor: state.boardColor,
+          boardFoodColor: state.boardFoodColor,
+          boardSnakeColor: state.boardSnakeColor,
+          boardSnakeSpeed: state.boardSnakeSpeed,
+        },
         updateBoardColor,
         updateBoardSize,
         updateBoardSnakeSpeed,

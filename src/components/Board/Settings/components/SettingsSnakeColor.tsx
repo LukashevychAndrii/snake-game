@@ -6,8 +6,7 @@ import getDefaultSettings from "../../../../utils/getDefaultSettings";
 import { BoardContext } from "../../../../Context/board-context";
 
 const SettingsSnakeColor = () => {
-  const { updateSnakeColor, boardSnakeColor } =
-    React.useContext(SettingsContext);
+  const { updateSnakeColor, boardSettings } = React.useContext(SettingsContext);
 
   const getNewSnakeColor = (snakeColor: color): void => {
     updateSnakeColor(snakeColor);
@@ -19,8 +18,8 @@ const SettingsSnakeColor = () => {
   return (
     <SettingsVariant2
       currentColor={
-        boardSnakeColor !== "default"
-          ? boardSnakeColor
+        boardSettings.boardSnakeColor !== "default"
+          ? boardSettings.boardSnakeColor
           : boardSnakeColor_g !== "default"
           ? boardSnakeColor_g
           : boardSnakeColor__DEFAULT

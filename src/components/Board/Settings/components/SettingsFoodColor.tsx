@@ -6,7 +6,7 @@ import { BoardContext } from "../../../../Context/board-context";
 import getDefaultSettings from "../../../../utils/getDefaultSettings";
 
 const SettingsFoodColor = () => {
-  const { updateFoodColor, boardFoodColor } = React.useContext(SettingsContext);
+  const { updateFoodColor, boardSettings } = React.useContext(SettingsContext);
   const { boardFoodColor: boardFoodColor_g } =
     React.useContext(BoardContext).boardSettings;
   const { boardFoodColor__DEFAULT } = getDefaultSettings();
@@ -18,8 +18,8 @@ const SettingsFoodColor = () => {
   return (
     <SettingsVariant2
       currentColor={
-        boardFoodColor !== "default"
-          ? boardFoodColor
+        boardSettings.boardFoodColor !== "default"
+          ? boardSettings.boardFoodColor
           : boardFoodColor_g !== "default"
           ? boardFoodColor_g
           : boardFoodColor__DEFAULT

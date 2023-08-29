@@ -6,7 +6,7 @@ import SettingsVariant2 from "./SettingsVariant/SettingsVariant2";
 import { color } from "../../../../types/color";
 
 const SettingsBoardColor = () => {
-  const { updateBoardColor, boardColor } = React.useContext(SettingsContext);
+  const { updateBoardColor, boardSettings } = React.useContext(SettingsContext);
 
   const { boardColor: boardColor_g } =
     React.useContext(BoardContext).boardSettings;
@@ -19,8 +19,8 @@ const SettingsBoardColor = () => {
   return (
     <SettingsVariant2
       currentColor={
-        boardColor !== "default"
-          ? boardColor
+        boardSettings.boardColor !== "default"
+          ? boardSettings.boardColor
           : boardColor_g !== "default"
           ? boardColor_g
           : boardColor__DEFAULT

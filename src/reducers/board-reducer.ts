@@ -18,9 +18,9 @@ export const boardReducer = (state: BoardContextI, action: Action) => {
       return {
         ...state,
         boardSettings: {
+          boardSize: action.payload,
           boardColor: action.payload,
           boardFoodColor: action.payload,
-          boardSize: action.payload,
           boardSnakeColor: action.payload,
           boardSnakeSpeed: action.payload,
         },
