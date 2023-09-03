@@ -8,18 +8,17 @@ import End from "./GameState/End/End";
 import getRandomNumber from "../../utils/getRandomNumber";
 import Header from "./Header/Header";
 import { BoardContext } from "../../Context/board-context";
-import useSetScoreMax from "../../hooks/useSetScoreMax";
 import { Snake } from "../../classes/Snake";
 import Settings from "./Settings/Settings";
 import useGetSnakeSpeed from "../../hooks/useGetSnakeSpeed";
 import useGetBoardSize from "../../hooks/useGetBoardSize";
 import useGetRowsAndCols from "../../hooks/useGetRowsAndCols";
 import { setEmptyCells } from "../../utils/setEmptyCells";
+import { getMaxScoreFromLocalStorage } from "../../utils/getMaxScoreFromLocalStorage";
 
 export type gameState = "start" | "playing" | "end";
 
 const Board = () => {
-  // useSetScoreMax();
   const boardSize = useGetBoardSize();
   const rowsAndCols = useGetRowsAndCols();
   const [counter, setCounter] = React.useState(0);
@@ -34,13 +33,22 @@ const Board = () => {
   );
   const [gameState, setGameState] = React.useState<gameState>("start");
 
-  const { updateScoreMax, updateScoreCurrent } = React.useContext(BoardContext);
+  React.useEffect(() => {
+    const score__MAX = getMaxScoreFromLocalStorage();
+    console.log(score__MAX);
+    if (score__MAX) {
+      updateScoreMax(score__MAX);
+    }
+  }, []);
+
+  const { updateScoreMax, updateScoreCurrent, scoreCurrent } =
+    React.useContext(BoardContext);
   const boardSnakeSpeed = useGetSnakeSpeed();
   // ! FOOD
   React.useEffect(() => {
     if (gameState === "start" || gameState === "end") {
-      updateScoreMax();
       updateScoreCurrent(0);
+      updateScoreMax(scoreCurrent);
       return;
     }
     // const interval = setInterval(() => {
@@ -50,8 +58,6 @@ const Board = () => {
     // }, 1000);
 
     if (foodCells.size === 0) {
-      console.log(emptyCells);
-      console.log(cellsRows);
       const newFoodCell = getRandomCell({ emptyCells });
       foodCells.add(newFoodCell);
     }
@@ -178,8 +184,9 @@ const Board = () => {
     } else if (gameState === "end") {
       setSnake(new Snake(1, rowsAndCols));
       snakeCells.clear();
+      // updateScoreMax();
     }
-  }, [gameState, snakeCells, boardSize, rowsAndCols, emptyCells]);
+  }, [gameState, snakeCells, boardSize, rowsAndCols, emptyCells, foodCells]);
 
   const getEatenCell = (): void => {
     snake.snake.addNode(snake.snake.tail.val);

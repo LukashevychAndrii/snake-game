@@ -3,6 +3,7 @@ import { boardReducer } from "../reducers/board-reducer";
 import { boardSize } from "../types/boardSize";
 import { color } from "../types/color";
 import { boardSnakeSpeed } from "../types/boardSnakeSpeed";
+import { setMaxScoreToLocalStorage } from "../utils/setMaxScoreToLocalStorage";
 
 export interface BoardSettingsI {
   boardSize: boardSize | "default";
@@ -21,7 +22,7 @@ const DefaultSettings: BoardSettingsI = {
 };
 export interface BoardContextI {
   scoreMax: number;
-  updateScoreMax: (newScoreMax?: number) => void;
+  updateScoreMax: (newScoreMax: number) => void;
   scoreCurrent: number;
   updateScoreCurrent: (newScoreCurrent: number) => void;
   boardSettings: BoardSettingsI;
@@ -47,7 +48,8 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateScoreMax = (newScoreMax?: number): void => {
     console.log(newScoreMax);
-    if (newScoreMax) {
+    if (newScoreMax && newScoreMax > state.scoreMax) {
+      setMaxScoreToLocalStorage({ newScoreMax });
       dispatch({
         type: "SET_MAX_SCORE",
         payload: newScoreMax,
