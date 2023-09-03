@@ -1,1 +1,1 @@
-export type boardSize = 100 | 200 | 300 | 400;
+export type boardSize = 100 | 169 | 225 | 289 | 400;

@@ -1,15 +1,24 @@
+import { RowsAndCols } from "../types/rowsAndCols";
+
 interface params {
   cellsRows: Map<number, number>;
   emptyCells: Set<number>;
+  rowsAndCols: RowsAndCols;
 }
 
-const createBoard = ({ cellsRows, emptyCells }: params): number[][] => {
+const createBoard = ({
+  cellsRows,
+  emptyCells,
+  rowsAndCols,
+}: params): number[][] => {
+  cellsRows.clear();
+
   const cells: number[][] = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < rowsAndCols; i++) {
     const row: number[] = [];
-    for (let j = 0; j < 20; j++) {
-      cellsRows.set(i * 20 + j + 1, i + 1);
-      emptyCells.add(i * 20 + j + 1);
+    for (let j = 0; j < rowsAndCols; j++) {
+      cellsRows.set(i * rowsAndCols + j + 1, i + 1);
+      emptyCells.add(i * rowsAndCols + j + 1);
       row.push(j);
     }
     cells.push(row);

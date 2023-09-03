@@ -13,45 +13,50 @@ import { Snake } from "../../classes/Snake";
 import Settings from "./Settings/Settings";
 import useGetSnakeSpeed from "../../hooks/useGetSnakeSpeed";
 import useGetBoardSize from "../../hooks/useGetBoardSize";
+import useGetRowsAndCols from "../../hooks/useGetRowsAndCols";
+import { setEmptyCells } from "../../utils/setEmptyCells";
 
 export type gameState = "start" | "playing" | "end";
 
 const Board = () => {
-  useSetScoreMax();
+  // useSetScoreMax();
+  const boardSize = useGetBoardSize();
+  const rowsAndCols = useGetRowsAndCols();
   const [counter, setCounter] = React.useState(0);
   const [cellsRows] = React.useState(new Map<number, number>(null));
-  const [snake, setSnake] = React.useState<Snake>(new Snake(2));
+  const [snake, setSnake] = React.useState<Snake>(new Snake(2, rowsAndCols));
   const [snakeCells] = React.useState(new Set());
   const [foodCells] = React.useState(new Set());
   const [emptyCells] = React.useState(new Set<number>());
   const board = React.useMemo(
-    () => createBoard({ cellsRows, emptyCells }),
-    [cellsRows, emptyCells]
+    () => createBoard({ cellsRows, emptyCells, rowsAndCols }),
+    [cellsRows, emptyCells, rowsAndCols]
   );
   const [gameState, setGameState] = React.useState<gameState>("start");
 
   const { updateScoreMax, updateScoreCurrent } = React.useContext(BoardContext);
   const boardSnakeSpeed = useGetSnakeSpeed();
-  const boardSize = useGetBoardSize();
   // ! FOOD
   React.useEffect(() => {
     if (gameState === "start" || gameState === "end") {
-      foodCells.clear();
       updateScoreMax();
       updateScoreCurrent(0);
       return;
     }
-    const interval = setInterval(() => {
-      const newFoodCell = getRandomCell({ emptyCells });
-      foodCells.add(newFoodCell);
-    }, 1000);
+    // const interval = setInterval(() => {
+    //   console.log(emptyCells.size);
+    //   const newFoodCell = getRandomCell({ emptyCells });
+    //   foodCells.add(newFoodCell);
+    // }, 1000);
 
     if (foodCells.size === 0) {
+      console.log(emptyCells);
+      console.log(cellsRows);
       const newFoodCell = getRandomCell({ emptyCells });
       foodCells.add(newFoodCell);
     }
 
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, [emptyCells, foodCells, gameState, counter]);
 
   const arrowPress = useArrowKeyPress(gameState);
@@ -63,7 +68,7 @@ const Board = () => {
     if (arrowPress) {
       setGameState("playing");
     }
-    if (snake.snake.head.val < 0 || snake.snake.head.val > 400) {
+    if (snake.snake.head.val < 0 || snake.snake.head.val > boardSize) {
       setGameState("end");
     }
     const interval = setInterval(() => {
@@ -106,7 +111,7 @@ const Board = () => {
           break;
         case "up":
           const prevU = snake.snake.head.val;
-          if (prevU - 20 < 0) {
+          if (prevU - rowsAndCols < 0) {
             clearInterval(interval);
             setGameState("end");
             break;
@@ -125,7 +130,7 @@ const Board = () => {
           break;
         case "down":
           const prevD = snake.snake.head.val;
-          if (prevD + 20 > 400) {
+          if (prevD + rowsAndCols > boardSize) {
             clearInterval(interval);
             setGameState("end");
             break;
@@ -158,21 +163,23 @@ const Board = () => {
     gameState,
     emptyCells,
     boardSnakeSpeed,
+    boardSize,
+    rowsAndCols,
   ]);
 
   React.useEffect(() => {
     if (gameState === "start") {
-      console.log("start");
-      const randomNumber = getRandomNumber(1, 400);
+      const randomNumber = getRandomNumber(1, boardSize);
       snakeCells.clear();
       snakeCells.add(randomNumber);
-      setSnake(new Snake(randomNumber));
+      foodCells.clear();
+      setEmptyCells({ emptyCells, rowsAndCols });
+      setSnake(new Snake(randomNumber, rowsAndCols));
     } else if (gameState === "end") {
-      console.log("end");
-      setSnake(new Snake(1));
+      setSnake(new Snake(1, rowsAndCols));
       snakeCells.clear();
     }
-  }, [gameState, snakeCells]);
+  }, [gameState, snakeCells, boardSize, rowsAndCols, emptyCells]);
 
   const getEatenCell = (): void => {
     snake.snake.addNode(snake.snake.tail.val);
@@ -188,14 +195,19 @@ const Board = () => {
     <>
       <div className={styles["board__wrapper"]}>
         <Header />
-        <div className={styles["board"]}>
+        <div
+          style={{ gridTemplateColumns: `repeat(${rowsAndCols},1fr)` }}
+          className={styles["board"]}
+        >
           {board.map((row, rowIndex) =>
             row.map((cell, cellIndex) => (
               <Cell
                 getEatenCell={getEatenCell}
-                foodCell={foodCells.has(rowIndex * 20 + cellIndex + 1)}
-                snakeCell={snakeCells.has(rowIndex * 20 + cellIndex + 1)}
-                pos={rowIndex * 20 + cellIndex + 1}
+                foodCell={foodCells.has(rowIndex * rowsAndCols + cellIndex + 1)}
+                snakeCell={snakeCells.has(
+                  rowIndex * rowsAndCols + cellIndex + 1
+                )}
+                pos={rowIndex * rowsAndCols + cellIndex + 1}
                 key={rowIndex + cellIndex}
               />
             ))

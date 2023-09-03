@@ -6,7 +6,7 @@ import getDefaultSettings from "../../../../utils/getDefaultSettings";
 import { BoardContext } from "../../../../Context/board-context";
 
 const BoardSizeVariants = () => {
-  const sizeVariants: boardSize[] = [100, 200, 300, 400];
+  const sizeVariants: boardSize[] = [100, 169, 225, 289, 400];
   const { updateBoardSize } = React.useContext(SettingsContext);
 
   const changeBoardSize = (size: boardSize): void => {
