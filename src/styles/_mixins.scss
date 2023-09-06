@@ -23,6 +23,12 @@
     opacity: 1;
   }
 }
+@mixin link-icon {
+  width: v.$is-default;
+  height: v.$is-default;
+  fill: v.$c-light;
+  cursor: pointer;
+}
 
 @mixin btn {
   text-decoration: none;

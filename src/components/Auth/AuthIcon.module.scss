@@ -1,24 +1,3 @@
 @use "../../styles/variables" as v;
 @use "../../styles/mixins" as m;
-
-.auth {
-  &__icon {
-    @include m.icon;
-    opacity: 1;
-  }
-  &__name {
-    color: #fff;
-    font-size: v.$f-default;
-  }
-  &__link {
-    opacity: 0.6;
-    transition: opacity 0.4s;
-    &:hover {
-      opacity: 1;
-    }
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
-}
+@use "../../styles/components";

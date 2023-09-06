@@ -36,3 +36,21 @@
   @include m.btn;
   background-color: pink;
 }
+
+.link {
+  text-decoration: none;
+  color: #fff;
+  font-size: v.$f-default;
+  opacity: 0.6;
+  transition: opacity 0.4s;
+  &:hover {
+    opacity: 1;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  &__icon {
+    @include m.link-icon;
+  }
+}

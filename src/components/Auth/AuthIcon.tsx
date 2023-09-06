@@ -12,15 +12,15 @@ const AuthIcon = () => {
   }
   return (
     <a
-      className={styles["auth__link"]}
+      className={styles["link"]}
       style={{ textDecoration: "none" }}
       href={`${
         isAuth ? "/snake-game/acc-details" : "/snake-game/auth--sign-in"
       }`}
       onClick={handleLinkClick}
     >
-      <DefaultAvatar className={styles["auth__icon"]} />
-      {isAuth && <span className={styles["auth__name"]}>{name}</span>}
+      <DefaultAvatar className={styles["link__icon"]} />
+      {isAuth && <span>{name}</span>}
     </a>
   );
 };
