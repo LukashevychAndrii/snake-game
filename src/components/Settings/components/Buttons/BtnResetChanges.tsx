@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "../../Setting.module.scss";
-import { BoardContext } from "../../../../../Context/board-context";
-import { SettingsContext } from "../../../../../Context/settings-context";
-import useGetAreSettingsDefault from "../../../../../hooks/useGetAreSettingsDefault";
+import { BoardContext } from "../../../../Context/board-context";
+import { SettingsContext } from "../../../../Context/settings-context";
+import useGetAreSettingsDefault from "../../../../hooks/useGetAreSettingsDefault";
 
 const BtnResetChanges = () => {
   const { resetSettings } = React.useContext(BoardContext);

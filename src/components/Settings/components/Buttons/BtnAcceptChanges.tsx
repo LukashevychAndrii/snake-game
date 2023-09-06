@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "../../Setting.module.scss";
-import { BoardContext } from "../../../../../Context/board-context";
-import { SettingsContext } from "../../../../../Context/settings-context";
-import useGetSettingsChanged from "../../../../../hooks/useGetSettingsChanged";
+import { BoardContext } from "../../../../Context/board-context";
+import { SettingsContext } from "../../../../Context/settings-context";
+import useGetSettingsChanged from "../../../../hooks/useGetSettingsChanged";
 
 const BtnAcceptChanges = () => {
   const { updateBoardSettings } = React.useContext(BoardContext);

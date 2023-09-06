@@ -1,3 +1,5 @@
+@use "./variables" as v;
+
 @mixin absolute-center {
   position: absolute;
   top: 50%;
@@ -9,4 +11,34 @@
 }
 @mixin bsh-2 {
   box-shadow: 0rem 0.75rem 2rem rgba($color: #000000, $alpha: 0.5);
+}
+@mixin icon {
+  width: v.$is-default;
+  height: v.$is-default;
+  fill: v.$c-light;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.4s;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+@mixin btn {
+  text-decoration: none;
+  color: #fff;
+  padding: 1rem 1.75rem;
+  font-size: 2.5rem;
+  transition: padding 0.4s;
+  border: none;
+  cursor: pointer;
+  @include bsh-1();
+  &:hover {
+    padding: 1rem 2.5rem;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    padding: 1rem 1.75rem;
+    opacity: 0.6;
+  }
 }

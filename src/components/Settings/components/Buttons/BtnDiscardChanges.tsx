@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "../../Setting.module.scss";
-import { SettingsContext } from "../../../../../Context/settings-context";
-import useGetSettingsChanged from "../../../../../hooks/useGetSettingsChanged";
-import { BoardContext } from "../../../../../Context/board-context";
+import { SettingsContext } from "../../../../Context/settings-context";
+import useGetSettingsChanged from "../../../../hooks/useGetSettingsChanged";
+import { BoardContext } from "../../../../Context/board-context";
 
 const BtnDiscardChanges = () => {
   const { discardChanges } = React.useContext(SettingsContext);

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Setting.module.scss";
 
-import { ReactComponent as SettingsIcon } from "../../../imgs/SVG/settings.svg";
+import { ReactComponent as SettingsIcon } from "../../imgs/SVG/settings.svg";
 import SettingsBoardSize from "./components/SettingsBoardSize";
 import SettingsSnakeSpeed from "./components/SettingsSnakeSpeed";
 import SettingsFoodColor from "./components/SettingsFoodColor";
@@ -10,7 +10,7 @@ import BtnAcceptChanges from "./components/Buttons/BtnAcceptChanges";
 import SettingsBoardColor from "./components/SettingsBoardColor";
 import BtnDiscardChanges from "./components/Buttons/BtnDiscardChanges";
 import BtnResetChanges from "./components/Buttons/BtnResetChanges";
-import useClickOutside from "../../../hooks/useClickOutside";
+import useClickOutside from "../../hooks/useClickOutside";
 
 type animation = "hidden" | "shown";
 

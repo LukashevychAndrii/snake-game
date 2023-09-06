@@ -1,0 +1,136 @@
+@use "../../../styles/mixins" as m;
+@use "../../../styles/variables" as v;
+@use "../../../styles/components";
+
+@mixin dk {
+  @include m.absolute-center();
+  width: 50rem;
+  transform: translate(-85%, -50%);
+  height: 65rem;
+  background-color: #59b2db;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  align-items: center;
+  font-size: v.$f-default;
+  gap: 4.5rem;
+  @include dk;
+  justify-content: center;
+
+  &__links {
+    @include m.absolute-center;
+    @include m.bsh-1();
+    z-index: 10;
+    display: flex;
+    height: 50rem;
+    gap: 5rem;
+    background-color: #8fbbe5;
+    width: 100rem;
+    &__link {
+      &__wrapper {
+        position: absolute;
+        left: 143.5%;
+        font-size: 3rem;
+        width: max-content;
+        top: 50%;
+        z-index: 50;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        color: #fff;
+      }
+    }
+    &__wrapper {
+      @include m.bsh-1();
+      @include dk;
+      z-index: 25;
+      &::before {
+        content: "";
+        width: 15rem;
+        height: 20rem;
+        position: absolute;
+        top: 15%;
+        left: 100%;
+        background-color: #a5aae4;
+        clip-path: polygon(100% 80%, 0 0, 0 100%);
+        z-index: 10;
+      }
+      &::after {
+        content: "";
+        width: 23.5rem;
+        height: 35rem;
+        position: absolute;
+        top: 30%;
+        left: 100%;
+        background-color: #9496e1;
+        clip-path: polygon(100% 80%, 0 0, 0 100%);
+      }
+    }
+    &__text {
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+  }
+  &__component {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    width: max-content;
+    position: relative;
+    height: max-content;
+    flex-direction: column;
+    @include m.bsh-1();
+
+    &__input {
+      width: 100%;
+      outline: none;
+      border: none;
+      padding: 1rem 1.5rem;
+      font-size: v.$f-default + 0.5rem;
+      opacity: 0.6;
+      border: 3px solid rgba($color: #fff, $alpha: 0.6);
+      transition: all 0.4s;
+
+      &:focus {
+        opacity: 1;
+      }
+      &--error {
+        color: red;
+        border: 3px solid red;
+      }
+    }
+    &__label {
+      position: absolute;
+      left: 6.5%;
+      top: 50%;
+      transform: translate(0%, -50%);
+      opacity: 0.6;
+      transition: all 0.4s;
+      font-weight: 600;
+      cursor: pointer;
+      &--error {
+        color: red;
+      }
+    }
+    &__input:focus + label {
+      opacity: 1;
+    }
+    &__input:not(:placeholder-shown) + label {
+      left: 90%;
+      opacity: 0;
+    }
+    &__error-text {
+      position: absolute;
+      bottom: 100%;
+      color: transparent;
+      &--visible {
+        color: red;
+      }
+    }
+  }
+}

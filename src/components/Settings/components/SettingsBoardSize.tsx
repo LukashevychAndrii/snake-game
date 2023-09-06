@@ -1,9 +1,9 @@
 import React from "react";
 import SettingsVariant1 from "./SettingsVariant/SettingsVariant1";
-import { boardSize } from "../../../../types/boardSize";
-import { SettingsContext } from "../../../../Context/settings-context";
-import getDefaultSettings from "../../../../utils/getDefaultSettings";
-import { BoardContext } from "../../../../Context/board-context";
+import { boardSize } from "../../../types/boardSize";
+import { SettingsContext } from "../../../Context/settings-context";
+import getDefaultSettings from "../../../utils/getDefaultSettings";
+import { BoardContext } from "../../../Context/board-context";
 
 const BoardSizeVariants = () => {
   const sizeVariants: boardSize[] = [100, 169, 225, 289, 400];

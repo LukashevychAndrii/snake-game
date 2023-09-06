@@ -9,7 +9,6 @@ import getRandomNumber from "../../utils/getRandomNumber";
 import Header from "./Header/Header";
 import { BoardContext } from "../../Context/board-context";
 import { Snake } from "../../classes/Snake";
-import Settings from "./Settings/Settings";
 import useGetSnakeSpeed from "../../hooks/useGetSnakeSpeed";
 import useGetBoardSize from "../../hooks/useGetBoardSize";
 import useGetRowsAndCols from "../../hooks/useGetRowsAndCols";
@@ -199,36 +198,31 @@ const Board = () => {
   };
 
   return (
-    <>
-      <div className={styles["board__wrapper"]}>
-        <Header />
-        <div
-          style={{ gridTemplateColumns: `repeat(${rowsAndCols},1fr)` }}
-          className={styles["board"]}
-        >
-          {board.map((row, rowIndex) =>
-            row.map((cell, cellIndex) => (
-              <Cell
-                getEatenCell={getEatenCell}
-                foodCell={foodCells.has(rowIndex * rowsAndCols + cellIndex + 1)}
-                snakeCell={snakeCells.has(
-                  rowIndex * rowsAndCols + cellIndex + 1
-                )}
-                pos={rowIndex * rowsAndCols + cellIndex + 1}
-                key={rowIndex + cellIndex}
-              />
-            ))
-          )}
-        </div>
-        {gameState === "end" && (
-          <End
-            end={emptyCells.size === 0 ? "win" : "loss"}
-            getGameState={getGameState}
-          />
+    <div className={styles["board__wrapper"]}>
+      <Header />
+      <div
+        style={{ gridTemplateColumns: `repeat(${rowsAndCols},1fr)` }}
+        className={styles["board"]}
+      >
+        {board.map((row, rowIndex) =>
+          row.map((cell, cellIndex) => (
+            <Cell
+              getEatenCell={getEatenCell}
+              foodCell={foodCells.has(rowIndex * rowsAndCols + cellIndex + 1)}
+              snakeCell={snakeCells.has(rowIndex * rowsAndCols + cellIndex + 1)}
+              pos={rowIndex * rowsAndCols + cellIndex + 1}
+              key={rowIndex + cellIndex}
+            />
+          ))
         )}
       </div>
-      <Settings />
-    </>
+      {gameState === "end" && (
+        <End
+          end={emptyCells.size === 0 ? "win" : "loss"}
+          getGameState={getGameState}
+        />
+      )}
+    </div>
   );
 };
 

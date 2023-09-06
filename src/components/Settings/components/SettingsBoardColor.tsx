@@ -1,9 +1,9 @@
 import React from "react";
-import { SettingsContext } from "../../../../Context/settings-context";
-import { BoardContext } from "../../../../Context/board-context";
-import getDefaultSettings from "../../../../utils/getDefaultSettings";
+import { SettingsContext } from "../../../Context/settings-context";
+import { BoardContext } from "../../../Context/board-context";
+import getDefaultSettings from "../../../utils/getDefaultSettings";
 import SettingsVariant2 from "./SettingsVariant/SettingsVariant2";
-import { color } from "../../../../types/color";
+import { color } from "../../../types/color";
 
 const SettingsBoardColor = () => {
   const { updateBoardColor, boardSettings } = React.useContext(SettingsContext);

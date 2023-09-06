@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "../../Setting.module.scss";
 
-import { ReactComponent as ChevronDown } from "../../../../../imgs/SVG/chevron-down.svg";
-import { useClickOutsideVariants } from "../../../../../hooks/useClickOutsideVariants";
-import { boardSize } from "../../../../../types/boardSize";
-import { boardSnakeSpeed } from "../../../../../types/boardSnakeSpeed";
+import { ReactComponent as ChevronDown } from "../../../../imgs/SVG/chevron-down.svg";
+import { useClickOutsideVariants } from "../../../../hooks/useClickOutsideVariants";
+import { boardSize } from "../../../../types/boardSize";
+import { boardSnakeSpeed } from "../../../../types/boardSnakeSpeed";
 
 interface props {
   heading: string;

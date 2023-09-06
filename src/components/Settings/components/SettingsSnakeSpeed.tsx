@@ -1,9 +1,9 @@
 import React from "react";
 import SettingsVariant1 from "./SettingsVariant/SettingsVariant1";
-import { SettingsContext } from "../../../../Context/settings-context";
-import getDefaultSettings from "../../../../utils/getDefaultSettings";
-import { BoardContext } from "../../../../Context/board-context";
-import { boardSnakeSpeed } from "../../../../types/boardSnakeSpeed";
+import { SettingsContext } from "../../../Context/settings-context";
+import getDefaultSettings from "../../../utils/getDefaultSettings";
+import { BoardContext } from "../../../Context/board-context";
+import { boardSnakeSpeed } from "../../../types/boardSnakeSpeed";
 
 const SnakeSpeedVariants = () => {
   const speedVariants: boardSnakeSpeed[] = [25, 50, 75, 100];

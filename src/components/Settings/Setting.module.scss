@@ -1,7 +1,7 @@
-@use "../../../styles/variables" as v;
-@use "../../../styles/mixins" as m;
-@use "../../../styles/animations";
-@use "../../../styles/components";
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+@use "../../styles/animations";
+@use "../../styles/components";
 
 .settings {
   @include m.absolute-center();
@@ -26,16 +26,7 @@
   }
 
   &__icon {
-    position: absolute;
-    right: 1vw;
-    top: 1vw;
-    fill: v.$c-light;
-    opacity: 0.6;
-    cursor: pointer;
-    transition: opacity 0.4s;
-    &:hover {
-      opacity: 1;
-    }
+    @include m.icon;
   }
   &__variant--1,
   &__variant--2 {

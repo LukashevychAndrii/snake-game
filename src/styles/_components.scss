@@ -26,3 +26,13 @@
     }
   }
 }
+
+.btn-light {
+  @include m.btn;
+  border: 2px solid #fff;
+}
+
+.btn-pink {
+  @include m.btn;
+  background-color: pink;
+}

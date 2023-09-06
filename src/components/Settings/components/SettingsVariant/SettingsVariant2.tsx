@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../Setting.module.scss";
-import { color } from "../../../../../types/color";
+import { color } from "../../../../types/color";
 
 interface props {
   heading: string;
