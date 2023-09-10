@@ -14,6 +14,7 @@ interface settings {
   updateBoardSnakeSpeed: (
     newBoardSnakeSpeed: boardSnakeSpeed | "default"
   ) => void;
+  setBoardSettings: (boardSettings: BoardSettingsI) => void;
   discardChanges: (changes: BoardSettingsI) => void;
 }
 
@@ -30,6 +31,7 @@ export const initialBoardSettingsState: settings = {
   updateBoardSnakeSpeed: () => {},
   updateFoodColor: () => {},
   updateSnakeColor: () => {},
+  setBoardSettings: () => {},
   discardChanges: () => {},
 };
 
@@ -63,6 +65,9 @@ export const SettingsProvider = ({
   const updateSnakeColor = (newSnakeColor: color | "default") => {
     dispatch({ type: "SET_BOARD_SNAKE_COLOR", payload: newSnakeColor });
   };
+  const setBoardSettings = (boardSettings: BoardSettingsI) => {
+    dispatch({ type: "SET_BOARD_SETTINGS", payload: boardSettings });
+  };
   const discardChanges = (changes: BoardSettingsI) => {
     dispatch({ type: "DISCARD_CHANGES", payload: changes });
   };
@@ -81,6 +86,7 @@ export const SettingsProvider = ({
         updateBoardSnakeSpeed,
         updateFoodColor,
         updateSnakeColor,
+        setBoardSettings,
         discardChanges,
       }}
     >

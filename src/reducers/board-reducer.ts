@@ -1,12 +1,12 @@
 import { BoardContextI, BoardSettingsI } from "../Context/board-context";
 
-type Action =
+export type boardAction =
   | { type: "SET_CURRENT_SCORE"; payload: number }
   | { type: "SET_MAX_SCORE"; payload: number }
   | { type: "SET_BOARD_SETTINGS"; payload: BoardSettingsI }
   | { type: "RESET_SETTINGS"; payload: "default" };
 
-export const boardReducer = (state: BoardContextI, action: Action) => {
+export const boardReducer = (state: BoardContextI, action: boardAction) => {
   switch (action.type) {
     case "SET_MAX_SCORE":
       return { ...state, scoreMax: action.payload };

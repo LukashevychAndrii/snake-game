@@ -5,6 +5,7 @@ export interface Auth_NEP {
 }
 
 export type Auth_EP = Pick<Auth_NEP, "email" | "password">;
+
 export type Auth_NE = Pick<Auth_NEP, "name" | "email">;
 
 export type Auth_N = Pick<Auth_NEP, "name">;

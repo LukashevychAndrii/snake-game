@@ -3,6 +3,7 @@ import styles from "../../Setting.module.scss";
 import { BoardContext } from "../../../../Context/board-context";
 import { SettingsContext } from "../../../../Context/settings-context";
 import useGetAreSettingsDefault from "../../../../hooks/useGetAreSettingsDefault";
+import { setDefaultSettings } from "../../../../firebase/functions/settings/setDefaultSettings";
 
 const BtnResetChanges = () => {
   const { resetSettings } = React.useContext(BoardContext);
@@ -11,6 +12,7 @@ const BtnResetChanges = () => {
   const settingsDefault = useGetAreSettingsDefault();
 
   const btnResetClick = () => {
+    setDefaultSettings();
     resetSettings();
     discardChanges({
       boardColor: "default",

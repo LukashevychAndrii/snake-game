@@ -4,6 +4,9 @@ import { boardSize } from "../types/boardSize";
 import { color } from "../types/color";
 import { boardSnakeSpeed } from "../types/boardSnakeSpeed";
 import { setMaxScoreToLocalStorage } from "../utils/setMaxScoreToLocalStorage";
+import { fetchBoardSettings } from "../firebase/functions/settings/fetchBoardSettings";
+import { setSettings } from "../firebase/functions/settings/setSettings";
+import { SettingsContext } from "./settings-context";
 
 export interface BoardSettingsI {
   boardSize: boardSize | "default";
@@ -27,6 +30,7 @@ export interface BoardContextI {
   updateScoreCurrent: (newScoreCurrent: number) => void;
   boardSettings: BoardSettingsI;
   updateBoardSettings: (newBoardSettings: BoardSettingsI) => void;
+  setBoardSettings: (boardSettings: BoardSettingsI) => void;
   resetSettings: () => void;
 }
 
@@ -37,6 +41,7 @@ export const BoardContextValues: BoardContextI = {
   updateScoreCurrent: () => {},
   boardSettings: DefaultSettings,
   updateBoardSettings: () => {},
+  setBoardSettings: () => {},
   resetSettings: () => {},
 };
 
@@ -64,10 +69,7 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateBoardSettings = (newBoardSettings: BoardSettingsI): void => {
-    dispatch({
-      type: "SET_BOARD_SETTINGS",
-      payload: newBoardSettings,
-    });
+    setSettings({ dispatch, newBoardSettings });
   };
 
   const resetSettings = (): void => {
@@ -76,6 +78,11 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
       payload: "default",
     });
   };
+
+  const setBoardSettings = (boardSettings: BoardSettingsI): void => {
+    dispatch({ type: "SET_BOARD_SETTINGS", payload: boardSettings });
+  };
+
   return (
     <BoardContext.Provider
       value={{
@@ -85,6 +92,7 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
         updateScoreCurrent,
         boardSettings: state.boardSettings,
         updateBoardSettings,
+        setBoardSettings,
         resetSettings,
       }}
     >

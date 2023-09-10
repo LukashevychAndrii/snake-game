@@ -37,9 +37,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function userSignUp({ name, email, password }: Auth_NEP) {
     await SignUp({ name, email, password, dispatch });
+    state.isAuth = true;
   }
   async function userSignIn({ email, password }: Auth_EP) {
     await SignIn({ email, password, dispatch });
+    state.isAuth = true;
   }
 
   async function userSignOut() {
@@ -54,7 +56,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   async function connectToAcc() {
-    autoLogin({ dispatch });
+    await autoLogin({ dispatch });
+    state.isAuth = true;
   }
 
   return (

@@ -5,9 +5,9 @@ interface Params {
   dispatch: React.Dispatch<userAction>;
 }
 
-export function autoLogin({ dispatch }: Params) {
+export async function autoLogin({ dispatch }: Params) {
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
+  await onAuthStateChanged(auth, (user) => {
     if (user?.displayName && user.email) {
       dispatch({
         type: "CONNECT_TO_ACC",

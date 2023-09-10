@@ -1,14 +1,15 @@
 import React from "react";
 import styles from "./App.module.scss";
 import Board from "./components/Board/Board";
-import { BoardProvider } from "./Context/board-context";
-import { SettingsProvider } from "./Context/settings-context";
 import TopBar from "./components/TopBar/TopBar";
 import { URL } from "./types/URL";
 import SignIn from "./components/Auth/SignIn";
 import SignUp from "./components/Auth/SignUp";
-import { UserProvider } from "./Context/user-context";
 import AccDetails from "./components/AccDetails/AccDetails";
+import { BoardContext } from "./Context/board-context";
+import { UserContext } from "./Context/user-context";
+import { fetchBoardSettings } from "./firebase/functions/settings/fetchBoardSettings";
+import { SettingsContext } from "./Context/settings-context";
 
 function App() {
   const [currentUrl, setCurrentUrl] = React.useState<URL>(
@@ -27,10 +28,6 @@ function App() {
   }, []);
 
   let componentToRender: JSX.Element = <></>;
-
-  React.useEffect(() => {
-    console.log(currentUrl);
-  }, [currentUrl]);
 
   switch (currentUrl) {
     case "/snake-game": {
@@ -52,17 +49,32 @@ function App() {
     default:
       componentToRender = <Board />;
   }
+  const { setBoardSettings: setBoardSettings_g } =
+    React.useContext(BoardContext);
+  const { setBoardSettings } = React.useContext(SettingsContext);
+  const { connectToAcc, isAuth } = React.useContext(UserContext);
+
+  React.useEffect(() => {
+    connectToAcc();
+  }, []);
+
+  React.useEffect(() => {
+    if (isAuth) {
+      const fetch = async () => {
+        const response = await fetchBoardSettings();
+        if (response) {
+          setBoardSettings_g(response);
+          setBoardSettings(response);
+        }
+      };
+      fetch();
+    }
+  }, [isAuth]);
 
   return (
     <main className={styles["main"]}>
-      <BoardProvider>
-        <SettingsProvider>
-          <UserProvider>
-            <TopBar />
-            {componentToRender}
-          </UserProvider>
-        </SettingsProvider>
-      </BoardProvider>
+      <TopBar />
+      {componentToRender}
     </main>
   );
 }
