@@ -14,6 +14,7 @@ import useGetBoardSize from "../../hooks/useGetBoardSize";
 import useGetRowsAndCols from "../../hooks/useGetRowsAndCols";
 import { setEmptyCells } from "../../utils/setEmptyCells";
 import { getMaxScoreFromLocalStorage } from "../../utils/getMaxScoreFromLocalStorage";
+import { LoadingContext } from "../../Context/loading-context";
 
 export type gameState = "start" | "playing" | "end";
 
@@ -34,7 +35,6 @@ const Board = () => {
 
   React.useEffect(() => {
     const score__MAX = getMaxScoreFromLocalStorage();
-    console.log(score__MAX);
     if (score__MAX) {
       updateScoreMax(score__MAX);
     }
@@ -197,7 +197,9 @@ const Board = () => {
     setGameState(state);
   };
 
-  return (
+  const { loadingSettingsQueue } = React.useContext(LoadingContext);
+
+  return loadingSettingsQueue <= 0 ? (
     <div className={styles["board__wrapper"]}>
       <Header />
       <div
@@ -223,6 +225,8 @@ const Board = () => {
         />
       )}
     </div>
+  ) : (
+    <span className={styles["board__loading-text"]}>Loading settings...</span>
   );
 };
 

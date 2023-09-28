@@ -14,7 +14,7 @@ export interface User {
   userSignUp: ({ name, email, password }: Auth_NEP) => void;
   userSignIn: ({ email, password }: Auth_EP) => void;
   userSignOut: () => void;
-  connectToAcc: () => void;
+  connectToAcc: (removeFormSettingsQueue?: () => void) => void;
   isAuth: boolean;
 }
 
@@ -46,6 +46,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function userSignOut() {
     await SignOut({ dispatch });
+    state.isAuth = false;
   }
 
   async function userUpdateName({ name }: Auth_N) {

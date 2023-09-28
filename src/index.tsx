@@ -6,18 +6,19 @@ import "./firebase/firebase";
 import { BoardProvider } from "./Context/board-context";
 import { SettingsProvider } from "./Context/settings-context";
 import { UserProvider } from "./Context/user-context";
+import { LoadingProvider } from "./Context/loading-context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <BoardProvider>
-      <SettingsProvider>
-        <UserProvider>
+  <BoardProvider>
+    <SettingsProvider>
+      <UserProvider>
+        <LoadingProvider>
           <App />
-        </UserProvider>
-      </SettingsProvider>
-    </BoardProvider>
-  </React.StrictMode>
+        </LoadingProvider>
+      </UserProvider>
+    </SettingsProvider>
+  </BoardProvider>
 );

@@ -35,9 +35,7 @@ const Cell: React.FC<props> = React.memo(
         className={`${styles["board__cell"]} ${
           snakeCell ? styles["board__cell--snake"] : ""
         } ${foodCell ? styles["board__cell--food"] : ""}`}
-      >
-        {pos}
-      </div>
+      ></div>
     );
   }
 );

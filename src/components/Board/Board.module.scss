@@ -27,4 +27,10 @@
       background-color: v.$c-food;
     }
   }
+  &__loading-text {
+    color: #fff;
+    font-size: v.$f-large;
+    @include m.absolute-center();
+    top: 25%;
+  }
 }
