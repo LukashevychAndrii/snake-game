@@ -80,5 +80,13 @@
   &__buttons {
     display: flex;
     justify-content: space-around;
+    &__btn-close {
+      @include m.hover();
+      position: absolute;
+      color: #fff;
+      font-size: 2.5rem;
+      top: 0;
+      right: 1rem;
+    }
   }
 }

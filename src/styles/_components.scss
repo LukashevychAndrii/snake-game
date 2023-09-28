@@ -41,11 +41,7 @@
   text-decoration: none;
   color: #fff;
   font-size: v.$f-default;
-  opacity: 0.6;
-  transition: opacity 0.4s;
-  &:hover {
-    opacity: 1;
-  }
+  @include m.hover();
   display: flex;
   flex-direction: column;
   align-items: center;

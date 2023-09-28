@@ -1,7 +1,9 @@
 import React from "react";
 
 type ref = React.RefObject<HTMLElement | null>;
-export default function useClickOutside(ref: ref): boolean {
+export default function useClickOutside(
+  ref: ref
+): [boolean, React.Dispatch<React.SetStateAction<boolean>>] {
   const [outside, setOutside] = React.useState(false);
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -16,5 +18,5 @@ export default function useClickOutside(ref: ref): boolean {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref]);
-  return outside;
+  return [outside, setOutside];
 }

@@ -30,7 +30,7 @@ const Settings = () => {
   };
 
   const ref = React.useRef(null);
-  const outside = useClickOutside(ref);
+  const [outside, setOutside] = useClickOutside(ref);
 
   React.useEffect(() => {
     if (outside) {
@@ -54,6 +54,15 @@ const Settings = () => {
             styles[`settings--${animation}`]
           }`}
         >
+          <span
+            onClick={() => {
+              setAnimation("hidden");
+              setOutside(true);
+            }}
+            className={styles["settings__buttons__btn-close"]}
+          >
+            &#10005;
+          </span>
           <div className={styles["settings__heading"]}>Settings</div>
           <SettingsBoardSize />
           <SettingsFoodColor />
