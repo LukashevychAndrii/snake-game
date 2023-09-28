@@ -59,6 +59,85 @@ const Board = () => {
 
   // ! SNAKE
 
+  const moove = () => {
+    switch (arrowPress) {
+      case "left":
+        const prevL = snake.snake.head.val;
+        if (cellsRows.get(prevL)! > cellsRows.get(prevL - 1)!) {
+          setGameState("end");
+          break;
+        }
+        snakeCells.delete(snake.snake.tail.val);
+        emptyCells.add(snake.snake.tail.val);
+        snake.moveLeft();
+        if (snakeCells.has(snake.snake.head.val)) {
+          setGameState("end");
+          break;
+        }
+        snakeCells.add(snake.snake.head.val);
+        emptyCells.delete(snake.snake.head.val);
+        setCounter((prev) => ++prev);
+        break;
+      case "right":
+        const prevR = snake.snake.head.val;
+        if (cellsRows.get(prevR)! < cellsRows.get(prevR + 1)!) {
+          setGameState("end");
+          break;
+        }
+        snakeCells.delete(snake.snake.tail.val);
+        emptyCells.add(snake.snake.tail.val);
+        snake.moveRight();
+        if (snakeCells.has(snake.snake.head.val)) {
+          setGameState("end");
+          break;
+        }
+        snakeCells.add(snake.snake.head.val);
+        emptyCells.delete(snake.snake.head.val);
+        setCounter((prev) => ++prev);
+        break;
+      case "up":
+        const prevU = snake.snake.head.val;
+        if (prevU - rowsAndCols < 0) {
+          setGameState("end");
+          break;
+        }
+
+        snakeCells.delete(snake.snake.tail.val);
+        emptyCells.add(snake.snake.tail.val);
+        snake.moveUp();
+        if (snakeCells.has(snake.snake.head.val)) {
+          setGameState("end");
+          break;
+        }
+        snakeCells.add(snake.snake.head.val);
+        emptyCells.delete(snake.snake.head.val);
+        setCounter((prev) => ++prev);
+        break;
+      case "down":
+        const prevD = snake.snake.head.val;
+        if (prevD + rowsAndCols > boardSize) {
+          setGameState("end");
+          break;
+        }
+
+        snakeCells.delete(snake.snake.tail.val);
+        emptyCells.add(snake.snake.tail.val);
+        snake.moveDown();
+        if (snakeCells.has(snake.snake.head.val)) {
+          setGameState("end");
+          break;
+        }
+        snakeCells.add(snake.snake.head.val);
+        emptyCells.delete(snake.snake.head.val);
+        setCounter((prev) => ++prev);
+        break;
+    }
+  };
+
+  React.useEffect(() => {
+    moove();
+  }, [arrowPress]);
+
   React.useEffect(() => {
     if (gameState === "end") return;
     if (arrowPress) {
@@ -68,85 +147,7 @@ const Board = () => {
       setGameState("end");
     }
     const interval = setInterval(() => {
-      switch (arrowPress) {
-        case "left":
-          const prevL = snake.snake.head.val;
-          if (cellsRows.get(prevL)! > cellsRows.get(prevL - 1)!) {
-            clearInterval(interval);
-            setGameState("end");
-            break;
-          }
-          snakeCells.delete(snake.snake.tail.val);
-          emptyCells.add(snake.snake.tail.val);
-          snake.moveLeft();
-          if (snakeCells.has(snake.snake.head.val)) {
-            setGameState("end");
-            break;
-          }
-          snakeCells.add(snake.snake.head.val);
-          emptyCells.delete(snake.snake.head.val);
-          setCounter((prev) => ++prev);
-          break;
-        case "right":
-          const prevR = snake.snake.head.val;
-          if (cellsRows.get(prevR)! < cellsRows.get(prevR + 1)!) {
-            clearInterval(interval);
-            setGameState("end");
-            break;
-          }
-          snakeCells.delete(snake.snake.tail.val);
-          emptyCells.add(snake.snake.tail.val);
-          snake.moveRight();
-          if (snakeCells.has(snake.snake.head.val)) {
-            setGameState("end");
-            break;
-          }
-          snakeCells.add(snake.snake.head.val);
-          emptyCells.delete(snake.snake.head.val);
-          setCounter((prev) => ++prev);
-          break;
-        case "up":
-          const prevU = snake.snake.head.val;
-          if (prevU - rowsAndCols < 0) {
-            clearInterval(interval);
-            setGameState("end");
-            break;
-          }
-
-          snakeCells.delete(snake.snake.tail.val);
-          emptyCells.add(snake.snake.tail.val);
-          snake.moveUp();
-          if (snakeCells.has(snake.snake.head.val)) {
-            setGameState("end");
-            break;
-          }
-          snakeCells.add(snake.snake.head.val);
-          emptyCells.delete(snake.snake.head.val);
-          setCounter((prev) => ++prev);
-          break;
-        case "down":
-          const prevD = snake.snake.head.val;
-          if (prevD + rowsAndCols > boardSize) {
-            clearInterval(interval);
-            setGameState("end");
-            break;
-          }
-
-          snakeCells.delete(snake.snake.tail.val);
-          emptyCells.add(snake.snake.tail.val);
-          snake.moveDown();
-          if (snakeCells.has(snake.snake.head.val)) {
-            setGameState("end");
-            break;
-          }
-          snakeCells.add(snake.snake.head.val);
-          emptyCells.delete(snake.snake.head.val);
-          setCounter((prev) => ++prev);
-          break;
-        default:
-          clearInterval(interval);
-          break;
-      }
+      moove();
     }, boardSnakeSpeed);
 
     return () => clearInterval(interval);
