@@ -13,6 +13,7 @@ import { SettingsContext } from "./Context/settings-context";
 import { LoadingContext } from "./Context/loading-context";
 import LoadingBar from "./components/Loading/LoadingBar";
 import { setPathname } from "./utils/setPathname";
+import useSetMaxScore from "./hooks/useSetMaxScore";
 
 function App() {
   const [currentUrl, setCurrentUrl] = React.useState<URL>(
@@ -41,11 +42,19 @@ function App() {
 
   const [authChecked, setAuthChecked] = React.useState(false);
 
+  const getMaxScore = useSetMaxScore();
+
   React.useEffect(() => {
     addToSettingsQueue();
     connectToAcc();
     setAuthChecked(true);
   }, []);
+
+  React.useEffect(() => {
+    if (isAuth) {
+      getMaxScore();
+    }
+  }, [isAuth]);
 
   React.useEffect(() => {
     if (currentUrl === "/") setPathname("/snake-game");

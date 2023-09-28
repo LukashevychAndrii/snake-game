@@ -13,7 +13,6 @@ import useGetSnakeSpeed from "../../hooks/useGetSnakeSpeed";
 import useGetBoardSize from "../../hooks/useGetBoardSize";
 import useGetRowsAndCols from "../../hooks/useGetRowsAndCols";
 import { setEmptyCells } from "../../utils/setEmptyCells";
-import { getMaxScoreFromLocalStorage } from "../../utils/getMaxScoreFromLocalStorage";
 
 export type gameState = "start" | "playing" | "end";
 
@@ -31,13 +30,6 @@ const Board = () => {
     [cellsRows, emptyCells, rowsAndCols]
   );
   const [gameState, setGameState] = React.useState<gameState>("start");
-
-  React.useEffect(() => {
-    const score__MAX = getMaxScoreFromLocalStorage();
-    if (score__MAX) {
-      updateScoreMax(score__MAX);
-    }
-  }, []);
 
   const { updateScoreMax, updateScoreCurrent, scoreCurrent } =
     React.useContext(BoardContext);
