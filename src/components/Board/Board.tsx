@@ -14,7 +14,6 @@ import useGetBoardSize from "../../hooks/useGetBoardSize";
 import useGetRowsAndCols from "../../hooks/useGetRowsAndCols";
 import { setEmptyCells } from "../../utils/setEmptyCells";
 import { getMaxScoreFromLocalStorage } from "../../utils/getMaxScoreFromLocalStorage";
-import { LoadingContext } from "../../Context/loading-context";
 
 export type gameState = "start" | "playing" | "end";
 
@@ -197,9 +196,7 @@ const Board = () => {
     setGameState(state);
   };
 
-  const { loadingSettingsQueue } = React.useContext(LoadingContext);
-
-  return loadingSettingsQueue <= 0 ? (
+  return (
     <div className={styles["board__wrapper"]}>
       <Header />
       <div
@@ -225,8 +222,6 @@ const Board = () => {
         />
       )}
     </div>
-  ) : (
-    <span className={styles["board__loading-text"]}>Loading settings...</span>
   );
 };
 

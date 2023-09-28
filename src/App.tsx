@@ -12,6 +12,7 @@ import { fetchBoardSettings } from "./firebase/functions/settings/fetchBoardSett
 import { SettingsContext } from "./Context/settings-context";
 import { LoadingContext } from "./Context/loading-context";
 import LoadingBar from "./components/Loading/LoadingBar";
+import { setPathname } from "./utils/setPathname";
 
 function App() {
   const [currentUrl, setCurrentUrl] = React.useState<URL>(
@@ -36,39 +37,52 @@ function App() {
   const { addToSettingsQueue, removeFormSettingsQueue, loadingSettingsQueue } =
     React.useContext(LoadingContext);
 
-  React.useEffect(() => {
-    console.log(loadingSettingsQueue);
-    switch (currentUrl) {
-      case "/snake-game": {
-        setComponentToRender(<Board />);
-        break;
-      }
-      case "/snake-game/auth--sign-in": {
-        setComponentToRender(<SignIn />);
-        break;
-      }
-      case "/snake-game/auth--sign-up": {
-        setComponentToRender(<SignUp />);
-        break;
-      }
-      case "/snake-game/acc-details": {
-        setComponentToRender(<AccDetails />);
-        break;
-      }
-      default:
-        setComponentToRender(<Board />);
-    }
-  }, [currentUrl, loadingSettingsQueue]);
-
-  const { setBoardSettings: setBoardSettings_g } =
-    React.useContext(BoardContext);
-  const { setBoardSettings } = React.useContext(SettingsContext);
   const { connectToAcc, isAuth } = React.useContext(UserContext);
+
+  const [authChecked, setAuthChecked] = React.useState(false);
 
   React.useEffect(() => {
     addToSettingsQueue();
     connectToAcc();
+    setAuthChecked(true);
   }, []);
+
+  React.useEffect(() => {
+    if (currentUrl === "/") setPathname("/snake-game");
+  }, [currentUrl]);
+
+  React.useEffect(() => {
+    if (authChecked) {
+      if (loadingSettingsQueue > 0) {
+        setComponentToRender(<LoadingBar />);
+        return;
+      }
+      switch (currentUrl) {
+        case "/snake-game": {
+          setComponentToRender(<Board />);
+          break;
+        }
+        case "/snake-game/auth--sign-in": {
+          setComponentToRender(<SignIn />);
+          break;
+        }
+        case "/snake-game/auth--sign-up": {
+          setComponentToRender(<SignUp />);
+          break;
+        }
+        case "/snake-game/acc-details": {
+          setComponentToRender(<AccDetails />);
+          break;
+        }
+        default:
+        // setPathname("/error");
+      }
+    }
+  }, [currentUrl, loadingSettingsQueue, authChecked]);
+
+  const { setBoardSettings: setBoardSettings_g } =
+    React.useContext(BoardContext);
+  const { setBoardSettings } = React.useContext(SettingsContext);
 
   React.useEffect(() => {
     if (isAuth) {
@@ -88,7 +102,6 @@ function App() {
 
   return (
     <main className={styles["main"]}>
-      <LoadingBar />
       <TopBar />
       {componentToRender}
     </main>
