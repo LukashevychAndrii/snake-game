@@ -7,7 +7,9 @@ const useGetRowsAndCols = () => {
   const { boardSize__DEFAULT } = getDefaultSettings();
   const { boardSize } = React.useContext(BoardContext).boardSettings;
   const [rowsAndCols, setRowsAndCols] = React.useState<RowsAndCols>(
-    Math.sqrt(boardSize__DEFAULT) as RowsAndCols
+    Math.sqrt(
+      boardSize !== "default" ? boardSize : boardSize__DEFAULT
+    ) as RowsAndCols
   );
 
   React.useEffect(() => {
@@ -15,7 +17,6 @@ const useGetRowsAndCols = () => {
       boardSize === "default" ? boardSize__DEFAULT : boardSize;
     setRowsAndCols(Math.sqrt(boardSizeNum) as RowsAndCols);
   }, [boardSize, boardSize__DEFAULT]);
-
   return rowsAndCols;
 };
 
