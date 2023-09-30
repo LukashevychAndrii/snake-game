@@ -9,17 +9,21 @@ import getRandomNumber from "../../utils/getRandomNumber";
 import Header from "./Header/Header";
 import { BoardContext } from "../../Context/board-context";
 import { Snake } from "../../classes/Snake";
-import useGetSnakeSpeed from "../../hooks/useGetSnakeSpeed";
-import useGetBoardSize from "../../hooks/useGetBoardSize";
-import useGetRowsAndCols from "../../hooks/useGetRowsAndCols";
 import { setEmptyCells } from "../../utils/setEmptyCells";
+import { boardSize } from "../../types/boardSize";
+import { RowsAndCols } from "../../types/rowsAndCols";
+import { boardSnakeSpeed } from "../../types/boardSnakeSpeed";
 
 export type gameState = "start" | "playing" | "end";
 
-const Board = () => {
-  const boardSize = useGetBoardSize();
-  const rowsAndCols = useGetRowsAndCols();
-  const [counter, setCounter] = React.useState(0);
+interface props {
+  boardSize: boardSize;
+  rowsAndCols: RowsAndCols;
+  boardSnakeSpeed: boardSnakeSpeed;
+}
+
+const Board = ({ boardSize, boardSnakeSpeed, rowsAndCols }: props) => {
+  const [counter, setCounter] = React.useState(0); // !!!!!!!
   const [cellsRows] = React.useState(new Map<number, number>(null));
   const [snake, setSnake] = React.useState<Snake>(new Snake(2, rowsAndCols));
   const [snakeCells] = React.useState(new Set());
@@ -33,8 +37,7 @@ const Board = () => {
 
   const { updateScoreMax, updateScoreCurrent, scoreCurrent } =
     React.useContext(BoardContext);
-  const boardSnakeSpeed = useGetSnakeSpeed();
-  // ! FOOD
+
   React.useEffect(() => {
     if (gameState === "start" || gameState === "end") {
       updateScoreCurrent(0);
@@ -56,8 +59,6 @@ const Board = () => {
   }, [emptyCells, foodCells, gameState, counter]);
 
   const arrowPress = useArrowKeyPress(gameState);
-
-  // ! SNAKE
 
   const moove = () => {
     switch (arrowPress) {
@@ -135,34 +136,26 @@ const Board = () => {
   };
 
   React.useEffect(() => {
+    if (arrowPress) {
+      setGameState("playing");
+    }
     moove();
+    let interval: any = null;
+    if (gameState === "playing") {
+      interval = setInterval(() => {
+        moove();
+      }, boardSnakeSpeed);
+    }
+
+    return () => clearInterval(interval);
   }, [arrowPress]);
 
   React.useEffect(() => {
     if (gameState === "end") return;
-    if (arrowPress) {
-      setGameState("playing");
-    }
     if (snake.snake.head.val < 0 || snake.snake.head.val > boardSize) {
       setGameState("end");
     }
-    const interval = setInterval(() => {
-      moove();
-    }, boardSnakeSpeed);
-
-    return () => clearInterval(interval);
-  }, [
-    arrowPress,
-    snake,
-    snakeCells,
-    counter,
-    cellsRows,
-    gameState,
-    emptyCells,
-    boardSnakeSpeed,
-    boardSize,
-    rowsAndCols,
-  ]);
+  }, [boardSize, gameState, snake.snake]);
 
   React.useEffect(() => {
     if (gameState === "start") {
@@ -175,15 +168,14 @@ const Board = () => {
     } else if (gameState === "end") {
       setSnake(new Snake(1, rowsAndCols));
       snakeCells.clear();
-      // updateScoreMax();
     }
   }, [gameState, snakeCells, boardSize, rowsAndCols, emptyCells, foodCells]);
 
-  const getEatenCell = (): void => {
+  const getEatenCell = React.useCallback((): void => {
     snake.snake.addNode(snake.snake.tail.val);
     foodCells.delete(snake.snake.head.val);
     updateScoreCurrent(snakeCells.size);
-  };
+  }, [foodCells.size, snakeCells.size]);
 
   const getGameState = (state: gameState): void => {
     setGameState(state);

@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./App.module.scss";
-import Board from "./components/Board/Board";
 import TopBar from "./components/TopBar/TopBar";
 import { URL } from "./types/URL";
 import SignIn from "./components/Auth/SignIn";
@@ -14,6 +13,7 @@ import { LoadingContext } from "./Context/loading-context";
 import LoadingBar from "./components/Loading/LoadingBar";
 import { setPathname } from "./utils/setPathname";
 import useSetMaxScore from "./hooks/useSetMaxScore";
+import BoardWrapper from "./components/Board/BoardWrapper";
 
 function App() {
   const [currentUrl, setCurrentUrl] = React.useState<URL>(
@@ -68,7 +68,7 @@ function App() {
       }
       switch (currentUrl) {
         case "/snake-game": {
-          setComponentToRender(<Board />);
+          setComponentToRender(<BoardWrapper />);
           break;
         }
         case "/snake-game/auth--sign-in": {

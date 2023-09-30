@@ -11,6 +11,7 @@ const createBoard = ({
   emptyCells,
   rowsAndCols,
 }: params): number[][] => {
+  console.log("creating board...");
   cellsRows.clear();
 
   const cells: number[][] = [];
