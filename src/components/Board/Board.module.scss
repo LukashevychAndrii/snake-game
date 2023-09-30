@@ -20,6 +20,7 @@
   &__cell {
     border: 1px solid v.$c-main;
     color: rgb(126, 126, 126);
+    position: relative;
     &--snake {
       background-color: v.$c-snake;
     }
@@ -32,5 +33,11 @@
     font-size: v.$f-large;
     @include m.absolute-center();
     top: 25%;
+  }
+  &__snake-head {
+    @include m.absolute-center();
+    width: 5.5rem;
+    height: 5.5rem;
+    z-index: 1;
   }
 }

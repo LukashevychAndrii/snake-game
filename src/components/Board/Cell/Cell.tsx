@@ -1,16 +1,32 @@
 import React from "react";
 import styles from "../Board.module.scss";
 import { BoardContext } from "../../../Context/board-context";
+import snakeHead from "../../../imgs/snake-head.png";
+import { direction } from "../../../hooks/useArrowKeyPress";
 
 interface props {
-  pos: number;
   snakeCell: boolean;
   foodCell: boolean;
   getEatenCell: () => void;
+  headCell: boolean;
+  direction: direction | null;
+}
+
+function getRotateDeg(direction: direction): number {
+  switch (direction) {
+    case "up":
+      return 180;
+    case "right":
+      return -90;
+    case "down":
+      return 0;
+    case "left":
+      return 90;
+  }
 }
 
 const Cell: React.FC<props> = React.memo(
-  ({ pos, snakeCell, foodCell, getEatenCell }) => {
+  ({ snakeCell, foodCell, getEatenCell, headCell, direction }) => {
     React.useEffect(() => {
       if (snakeCell && foodCell) {
         getEatenCell();
@@ -20,22 +36,39 @@ const Cell: React.FC<props> = React.memo(
     const { boardFoodColor, boardSnakeColor, boardColor } =
       React.useContext(BoardContext).boardSettings;
 
+    const [rotate, setRotate] = React.useState(0);
+    React.useEffect(() => {
+      if (direction) {
+        setRotate(getRotateDeg(direction));
+      }
+    }, [direction]);
+
     return (
       <div
         style={{
-          backgroundColor:
-            snakeCell && boardSnakeColor !== "default"
-              ? boardSnakeColor
-              : foodCell && boardFoodColor !== "default"
-              ? boardFoodColor
-              : !snakeCell && !foodCell && boardColor !== "default"
-              ? boardColor
-              : "",
+          backgroundColor: headCell
+            ? boardColor
+            : snakeCell && boardSnakeColor !== "default"
+            ? boardSnakeColor
+            : foodCell && boardFoodColor !== "default"
+            ? boardFoodColor
+            : !snakeCell && !foodCell && boardColor !== "default"
+            ? boardColor
+            : "",
         }}
         className={`${styles["board__cell"]} ${
           snakeCell ? styles["board__cell--snake"] : ""
         } ${foodCell ? styles["board__cell--food"] : ""}`}
-      ></div>
+      >
+        {headCell && (
+          <img
+            style={{ transform: `translate(-50%, -50%) rotate(${rotate}deg)` }}
+            className={styles["board__snake-head"]}
+            src={snakeHead}
+            alt="head"
+          ></img>
+        )}
+      </div>
     );
   }
 );

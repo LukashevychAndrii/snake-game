@@ -194,7 +194,11 @@ const Board = ({ boardSize, boardSnakeSpeed, rowsAndCols }: props) => {
               getEatenCell={getEatenCell}
               foodCell={foodCells.has(rowIndex * rowsAndCols + cellIndex + 1)}
               snakeCell={snakeCells.has(rowIndex * rowsAndCols + cellIndex + 1)}
-              pos={rowIndex * rowsAndCols + cellIndex + 1}
+              headCell={
+                snake.snake.head.val === rowIndex * rowsAndCols + cellIndex + 1
+              }
+              direction={arrowPress}
+              // pos={rowIndex * rowsAndCols + cellIndex + 1}
               key={rowIndex + cellIndex}
             />
           ))
