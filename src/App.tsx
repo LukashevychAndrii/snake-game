@@ -40,14 +40,11 @@ function App() {
 
   const { connectToAcc, isAuth } = React.useContext(UserContext);
 
-  const [authChecked, setAuthChecked] = React.useState(false);
-
   const getMaxScore = useSetMaxScore();
 
   React.useEffect(() => {
     addToSettingsQueue();
     connectToAcc();
-    setAuthChecked(true);
   }, []);
 
   React.useEffect(() => {
@@ -61,11 +58,9 @@ function App() {
   }, [currentUrl]);
 
   React.useEffect(() => {
-    if (authChecked) {
-      if (loadingSettingsQueue > 0) {
-        setComponentToRender(<LoadingBar />);
-        return;
-      }
+    if (isAuth && loadingSettingsQueue > 0) {
+      setComponentToRender(<LoadingBar />);
+    } else {
       switch (currentUrl) {
         case "/snake-game": {
           setComponentToRender(<BoardWrapper />);
@@ -87,7 +82,7 @@ function App() {
         // setPathname("/error");
       }
     }
-  }, [currentUrl, loadingSettingsQueue, authChecked]);
+  }, [currentUrl, loadingSettingsQueue, isAuth]);
 
   const { setBoardSettings: setBoardSettings_g } =
     React.useContext(BoardContext);

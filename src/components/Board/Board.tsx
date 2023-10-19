@@ -136,12 +136,9 @@ const Board = ({ boardSize, boardSnakeSpeed, rowsAndCols }: props) => {
   };
 
   React.useEffect(() => {
+    let interval: any = null;
     if (arrowPress) {
       setGameState("playing");
-    }
-    moove();
-    let interval: any = null;
-    if (gameState === "playing") {
       interval = setInterval(() => {
         moove();
       }, boardSnakeSpeed);
@@ -155,7 +152,7 @@ const Board = ({ boardSize, boardSnakeSpeed, rowsAndCols }: props) => {
     if (snake.snake.head.val < 0 || snake.snake.head.val > boardSize) {
       setGameState("end");
     }
-  }, [boardSize, gameState, snake.snake]);
+  }, [boardSize, gameState, snake.snake.head.val]);
 
   React.useEffect(() => {
     if (gameState === "start") {

@@ -57,7 +57,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   async function connectToAcc() {
-    await autoLogin({ dispatch });
+    autoLogin({ dispatch });
     state.isAuth = true;
   }
 

@@ -7,9 +7,9 @@ import BoardIcon from "../Board/BoardIcon/BoardIcon";
 
 const TopBar = () => {
   const { connectToAcc } = React.useContext(UserContext);
-  React.useEffect(() => {
-    connectToAcc();
-  }, []);
+  // React.useEffect(() => {
+  //   connectToAcc();
+  // }, []);
 
   return (
     <div className={styles["top-bar"]}>
