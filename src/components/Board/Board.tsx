@@ -136,6 +136,9 @@ const Board = ({ boardSize, boardSnakeSpeed, rowsAndCols }: props) => {
   };
 
   React.useEffect(() => {
+    if (gameState === "playing") {
+      moove();
+    }
     let interval: any = null;
     if (arrowPress) {
       setGameState("playing");
