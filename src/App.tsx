@@ -14,6 +14,7 @@ import LoadingBar from "./components/Loading/LoadingBar";
 import { setPathname } from "./utils/setPathname";
 import useSetMaxScore from "./hooks/useSetMaxScore";
 import BoardWrapper from "./components/Board/BoardWrapper";
+import { redirect } from "./utils/redirect";
 
 function App() {
   const [currentUrl, setCurrentUrl] = React.useState<URL>(
@@ -43,22 +44,15 @@ function App() {
   const getMaxScore = useSetMaxScore();
 
   React.useEffect(() => {
-    addToSettingsQueue();
     connectToAcc();
   }, []);
 
   React.useEffect(() => {
-    if (isAuth) {
-      getMaxScore();
-    }
-  }, [isAuth]);
-
-  React.useEffect(() => {
-    if (currentUrl === "/") setPathname("/snake-game");
+    if (currentUrl === "/") redirect("/snake-game");
   }, [currentUrl]);
 
   React.useEffect(() => {
-    if (isAuth && loadingSettingsQueue > 0) {
+    if (loadingSettingsQueue > 0) {
       setComponentToRender(<LoadingBar />);
     } else {
       switch (currentUrl) {
@@ -78,7 +72,7 @@ function App() {
           setComponentToRender(<AccDetails />);
           break;
         }
-        default:
+        // default:
         // setPathname("/error");
       }
     }
@@ -94,13 +88,13 @@ function App() {
         addToSettingsQueue();
         const response = await fetchBoardSettings();
         removeFormSettingsQueue();
-        removeFormSettingsQueue();
         if (response) {
           setBoardSettings_g(response);
           setBoardSettings(response);
         }
       };
       fetch();
+      getMaxScore();
     }
   }, [isAuth]);
 

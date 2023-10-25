@@ -5,14 +5,17 @@ interface Params {
   dispatch: React.Dispatch<userAction>;
 }
 
-export function autoLogin({ dispatch }: Params) {
+export async function autoLogin({ dispatch }: Params) {
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user?.displayName && user.email) {
-      dispatch({
-        type: "CONNECT_TO_ACC",
-        payload: { name: user.displayName, email: user.email },
-      });
-    }
+  await new Promise<void>((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user?.displayName && user.email) {
+        dispatch({
+          type: "CONNECT_TO_ACC",
+          payload: { name: user.displayName, email: user.email },
+        });
+        resolve();
+      }
+    });
   });
 }
