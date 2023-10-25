@@ -11,7 +11,6 @@ import { fetchBoardSettings } from "./firebase/functions/settings/fetchBoardSett
 import { SettingsContext } from "./Context/settings-context";
 import { LoadingContext } from "./Context/loading-context";
 import LoadingBar from "./components/Loading/LoadingBar";
-import { setPathname } from "./utils/setPathname";
 import useSetMaxScore from "./hooks/useSetMaxScore";
 import BoardWrapper from "./components/Board/BoardWrapper";
 import { redirect } from "./utils/redirect";
