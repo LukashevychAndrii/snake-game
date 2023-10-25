@@ -9,7 +9,7 @@ const BoardIcon = () => {
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) {
     e.preventDefault();
-    redirect("/snake-game");
+    redirect("/snake-game/");
   }
   return (
     <a className={styles["link"]} href="/snake-game" onClick={handleClickBoard}>

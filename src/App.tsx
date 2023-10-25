@@ -47,7 +47,7 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    if (currentUrl === "/") redirect("/snake-game");
+    if (currentUrl === "/") redirect("/snake-game/");
   }, [currentUrl]);
 
   React.useEffect(() => {
@@ -55,7 +55,7 @@ function App() {
       setComponentToRender(<LoadingBar />);
     } else {
       switch (currentUrl) {
-        case "/snake-game": {
+        case "/snake-game/": {
           setComponentToRender(<BoardWrapper />);
           break;
         }

@@ -11,7 +11,7 @@ export async function SignOut({ dispatch }: Params) {
   signOut(auth)
     .then(() => {
       dispatch({ type: "DISCONNECT_FROM_ACC", payload: null });
-      redirect("/snake-game");
+      redirect("/snake-game/");
     })
     .catch((e) => {
       console.log(e.code);
