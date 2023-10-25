@@ -10,7 +10,6 @@ export async function setDefaultSettings() {
     const db = getDatabase();
     const dbRef = ref(db, `${ID}/settings`);
     const defaultSettings = initialBoardSettingsState.boardSettings;
-    console.log(defaultSettings);
     set(dbRef, defaultSettings);
   }
 }

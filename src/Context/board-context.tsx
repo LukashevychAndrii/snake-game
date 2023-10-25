@@ -5,6 +5,8 @@ import { color } from "../types/color";
 import { boardSnakeSpeed } from "../types/boardSnakeSpeed";
 import { setSettings } from "../firebase/functions/settings/setSettings";
 import { setMaxScore } from "../firebase/functions/score/setMaxScore";
+import { UserContext } from "./user-context";
+import { setDefaultSettings } from "../firebase/functions/settings/setDefaultSettings";
 
 export interface BoardSettingsI {
   boardSize: boardSize | "default";
@@ -49,6 +51,8 @@ export const BoardContext =
 export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = React.useReducer(boardReducer, BoardContextValues);
 
+  const { isAuth } = React.useContext(UserContext);
+
   const updateScoreMax = (newScoreMax: number): void => {
     if (newScoreMax && newScoreMax > state.scoreMax) {
       setMaxScore(newScoreMax);
@@ -65,17 +69,25 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const updateBoardSettings = (newBoardSettings: BoardSettingsI): void => {
-    setSettings({ dispatch, newBoardSettings });
+  // set temporary settings
+  const updateBoardSettings = async (
+    newBoardSettings: BoardSettingsI
+  ): Promise<void> => {
+    if (isAuth) await setSettings({ newBoardSettings });
+
+    dispatch({ type: "SET_BOARD_SETTINGS", payload: newBoardSettings });
   };
 
-  const resetSettings = (): void => {
+  const resetSettings = async (): Promise<void> => {
+    if (isAuth) await setDefaultSettings();
+
     dispatch({
       type: "RESET_SETTINGS",
       payload: "default",
     });
   };
 
+  // Set board settings
   const setBoardSettings = (boardSettings: BoardSettingsI): void => {
     dispatch({ type: "SET_BOARD_SETTINGS", payload: boardSettings });
   };
