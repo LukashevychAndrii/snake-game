@@ -19,7 +19,7 @@ export async function SignIn({ email, password, dispatch }: Params) {
           type: "CONNECT_TO_ACC",
           payload: { name: user.displayName, email: user.email },
         });
-        redirect("/snake-game/");
+        redirect("/snake-game");
       }
     })
     .catch((e) => {

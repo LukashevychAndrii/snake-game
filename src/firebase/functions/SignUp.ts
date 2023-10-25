@@ -34,7 +34,7 @@ export async function SignUp({ name, email, password, dispatch }: Params) {
       });
 
       await setDefaultSettings();
-      redirect("/snake-game/");
+      redirect("/snake-game");
     }
   } catch (error) {
     if (error instanceof FirebaseError) {

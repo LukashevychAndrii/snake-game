@@ -107,7 +107,6 @@ const AuthForm: React.FC<Props> = ({ current }) => {
 
   function submitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("123");
     if (state.formValid) {
       if (current === "sign-in") {
         userSignIn({ email: state.email, password: state.password });
