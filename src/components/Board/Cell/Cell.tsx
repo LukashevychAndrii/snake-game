@@ -63,7 +63,7 @@ const Cell: React.FC<props> = React.memo(
         {headCell && (
           <img
             style={{ transform: `translate(-50%, -50%) rotate(${rotate}deg)` }}
-            className={styles["board__snake-head"]}
+            className={styles["board__cell--snake__head"]}
             src={snakeHead}
             alt="head"
           ></img>

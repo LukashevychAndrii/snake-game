@@ -2,8 +2,6 @@
 @use "../../styles/mixins" as m;
 
 .board {
-  // width: v.$bs-default;
-  // height: v.$bs-default;
   background-color: v.$c-board;
   display: grid;
   grid-template-columns: repeat(20, 1fr);
@@ -16,6 +14,12 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    @media screen and (max-width: 700px) {
+      top: 75vw;
+    }
+    @media screen and (max-width: 450px) {
+      top: 85vw;
+    }
   }
 
   &__cell {
@@ -24,8 +28,23 @@
     position: relative;
     width: v.$bcs-default;
     height: v.$bcs-default;
+
+    @media screen and (max-width: 700px) {
+      width: v.$bcs-small;
+      height: v.$bcs-small;
+    }
     &--snake {
       background-color: v.$c-snake;
+      &__head {
+        @include m.absolute-center();
+        width: v.$bshs-default;
+        height: v.$bshs-default;
+        z-index: 1;
+        @media screen and (max-width: 700px) {
+          width: v.$bshs-small;
+          height: v.$bshs-small;
+        }
+      }
     }
     &--food {
       background-color: v.$c-food;
@@ -36,11 +55,5 @@
     font-size: v.$f-large;
     @include m.absolute-center();
     top: 25%;
-  }
-  &__snake-head {
-    @include m.absolute-center();
-    width: v.$bshs-default;
-    height: v.$bshs-default;
-    z-index: 1;
   }
 }
