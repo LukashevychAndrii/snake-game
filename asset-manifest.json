@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/snake-game/static/css/main.f66685cb.css",
-    "main.js": "/snake-game/static/js/main.a81e696c.js",
-    "static/media/lose.png": "/snake-game/static/media/lose.1b127327e1eb38726384.png",
-    "static/media/snake-head.png": "/snake-game/static/media/snake-head.103fb08f7366b05e561e.png",
-    "static/media/settings.svg": "/snake-game/static/media/settings.b3318260c07053ca8b4b1561a72b7c62.svg",
-    "static/media/board.svg": "/snake-game/static/media/board.eaa638d1d8f7ddc09212e6b09594c70b.svg",
-    "index.html": "/snake-game/index.html",
-    "static/media/default-avatar.svg": "/snake-game/static/media/default-avatar.f9d535b2e8fa84ece16db5884772facc.svg",
-    "static/media/chevron-down.svg": "/snake-game/static/media/chevron-down.021124f1174dea0745dfaafed82d692e.svg",
-    "main.f66685cb.css.map": "/snake-game/static/css/main.f66685cb.css.map",
-    "main.a81e696c.js.map": "/snake-game/static/js/main.a81e696c.js.map"
+    "main.css": "/snake_game/static/css/main.0e9d5dc1.css",
+    "main.js": "/snake_game/static/js/main.1ba47515.js",
+    "static/media/lose.png": "/snake_game/static/media/lose.1b127327e1eb38726384.png",
+    "static/media/snake-head.png": "/snake_game/static/media/snake-head.103fb08f7366b05e561e.png",
+    "static/media/settings.svg": "/snake_game/static/media/settings.878471ca261a276fd02422d211d28089.svg",
+    "static/media/board.svg": "/snake_game/static/media/board.35b5120f94046bf91340ec7f5e8ae881.svg",
+    "index.html": "/snake_game/index.html",
+    "static/media/default-avatar.svg": "/snake_game/static/media/default-avatar.435e57fde23c3a5af1194ed2a4b24c41.svg",
+    "static/media/chevron-down.svg": "/snake_game/static/media/chevron-down.06df42806b5d6b88d74d643ff916a0be.svg",
+    "main.0e9d5dc1.css.map": "/snake_game/static/css/main.0e9d5dc1.css.map",
+    "main.1ba47515.js.map": "/snake_game/static/js/main.1ba47515.js.map"
   },
   "entrypoints": [
-    "static/css/main.f66685cb.css",
-    "static/js/main.a81e696c.js"
+    "static/css/main.0e9d5dc1.css",
+    "static/js/main.1ba47515.js"
   ]
 }
