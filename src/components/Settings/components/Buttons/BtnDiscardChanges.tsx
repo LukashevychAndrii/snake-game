@@ -18,7 +18,7 @@ const BtnDiscardChanges = () => {
       onClick={btnDiscardClick}
       className={styles["btn"]}
     >
-      Discard Changes
+      Discard
     </button>
   );
 };

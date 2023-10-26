@@ -5,24 +5,49 @@
 
 .settings {
   @include m.absolute-center();
-  width: 70rem;
-  height: 80rem;
+  width: 60rem;
   background-color: v.$c-settings;
   z-index: 1000;
   padding: 0 5rem;
   display: flex;
   flex-direction: column;
   gap: 5rem;
+  @media screen and (max-width: 1000px) {
+    width: 70vw;
+  }
+  @media screen and (max-width: 700px) {
+    top: 75vw;
+  }
+  @media screen and (max-width: 550px) {
+    width: 90vw;
+    gap: 4rem;
+  }
+  @media screen and (max-width: 450px) {
+    top: 100vw;
+  }
   &--hidden {
     animation: hide 0.4s forwards;
+    padding: 4rem;
+    border-radius: 1rem;
+    @media screen and (max-width: 550px) {
+      padding: 2rem;
+    }
   }
   &--shown {
     animation: show 0.4s forwards;
+    padding: 4rem;
+    border-radius: 1rem;
+    @media screen and (max-width: 550px) {
+      padding: 2rem;
+    }
   }
   &__heading {
     text-align: center;
     color: v.$c-light;
     font-size: 3.5rem;
+    @media screen and (max-width: 1000px) {
+      font-size: 3rem;
+    }
   }
 
   &__icon {
@@ -34,6 +59,10 @@
     justify-content: space-between;
     color: v.$c-light;
     font-size: v.$f-default;
+    &__heading {
+      display: flex;
+      align-items: center;
+    }
   }
   &__variant--1 {
     & > form {
@@ -80,13 +109,16 @@
   &__buttons {
     display: flex;
     justify-content: space-around;
+    & > * {
+      white-space: nowrap;
+    }
     &__btn-close {
       @include m.hover();
       position: absolute;
       color: #fff;
       font-size: 2.5rem;
-      top: 0;
-      right: 1rem;
+      top: 1.1rem;
+      right: 1.75rem;
     }
   }
 }

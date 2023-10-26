@@ -26,7 +26,7 @@ const BtnAcceptChanges = () => {
       onClick={btnAcceptClick}
       className={styles["btn"]}
     >
-      Accept Changes
+      Accept
     </button>
   );
 };

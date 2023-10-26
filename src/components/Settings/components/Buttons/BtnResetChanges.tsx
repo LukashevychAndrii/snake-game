@@ -28,7 +28,7 @@ const BtnResetChanges = () => {
       onClick={btnResetClick}
       className={styles["btn"]}
     >
-      Reset Changes
+      Reset
     </button>
   );
 };

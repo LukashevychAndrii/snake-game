@@ -44,7 +44,9 @@ const SettingsVariant1: React.FC<props> = ({
           onClick={() => setChecked(false)}
           htmlFor={variantType}
         >
-          <div>{currentValue}</div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {currentValue}
+          </div>
           <ChevronDown
             className={styles["settings__variant--1__chevron-down"]}
           />
