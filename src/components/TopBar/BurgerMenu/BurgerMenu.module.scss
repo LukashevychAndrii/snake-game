@@ -1,0 +1,212 @@
+@use "../../../styles/mixins" as m;
+
+.burger-menu {
+  width: 5rem;
+  height: 5rem;
+  background-color: #000;
+  border-radius: 10rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 1000;
+  &--show {
+    animation: openMenu 1s;
+    animation-fill-mode: forwards;
+  }
+  &--hide {
+    animation: hideMenu 1s;
+    animation-fill-mode: forwards;
+  }
+  &__checkbox {
+    display: none;
+  }
+  &__links {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    z-index: 1001;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    &--show {
+      animation: showLinks 0.5s 0.2s;
+      animation-timing-function: cubic-bezier(0, 1.55, 0.84, 0.93);
+      animation-fill-mode: forwards;
+    }
+    &--hide {
+      animation: hideLinks 0.5s;
+      animation-timing-function: cubic-bezier(0.4, 1.18, 0.84, 0.93);
+      animation-fill-mode: forwards;
+    }
+    &__link {
+      &:link,
+      &:visited {
+        display: inline-block;
+        color: #fff;
+        font-size: 6rem;
+        text-decoration: none;
+        padding: 1rem 2rem;
+        background-image: linear-gradient(
+          120deg,
+          transparent 0%,
+          transparent 50%,
+          #fff 50%
+        );
+        background-size: 250%;
+        transition: all 0.4s;
+        white-space: nowrap;
+      }
+      &:hover,
+      &:active {
+        background-position: 100%;
+        color: #000;
+        transform: translateX(1rem);
+      }
+    }
+  }
+
+  &__checkbox:checked + label &__btn__wrapper &__btn--1--animated {
+    animation: forwardsAnim__F 0.5s, forwardsAnim__S--1 0.5s 0.5s;
+    animation-fill-mode: forwards;
+  }
+  &__checkbox:checked + label &__btn__wrapper &__btn--2--animated {
+    animation: forwardsAnim__F 0.5s, forwardsAnim__S--2 0.5s 0.5s;
+    animation-fill-mode: forwards;
+  }
+  &__checkbox:checked + label &__btn__wrapper &__btn--3--animated {
+    animation: forwardsAnim__F 0.5s, forwardsAnim__S--2 0.5s 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+  &__checkbox:not(:checked) + label &__btn__wrapper &__btn--1--animated {
+    animation: backwardsAnim__F--1 0.5s, backwardsAnim__S--1 0.5s 0.5s;
+    animation-fill-mode: forwards;
+  }
+  &__checkbox:not(:checked) + label &__btn__wrapper &__btn--2--animated {
+    animation: backwardsAnim__F--1 0.5s;
+    animation-fill-mode: forwards;
+  }
+  &__checkbox:not(:checked) + label &__btn__wrapper &__btn--3--animated {
+    animation: backwardsAnim__F--2 0.5s, backwardsAnim__S--2 0.5s 0.5s;
+    animation-fill-mode: forwards;
+  }
+  &__wrapper {
+    position: relative;
+  }
+  &__btn {
+    background-color: #fff;
+    @include m.absolute-center();
+    z-index: 1001;
+    width: 3.5rem;
+    height: 0.4rem;
+    &__wrapper {
+      position: relative;
+      width: 3.5rem;
+      // height: calc(0.4rem + ((0.4rem / 100 * 250) * 2.5));
+      height: 3.5rem;
+      @include m.hover();
+      z-index: 1001;
+    }
+    &--1 {
+      top: 90%;
+    }
+    &--3 {
+      top: 10%;
+    }
+  }
+}
+
+@keyframes forwardsAnim__F {
+  to {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+}
+@keyframes forwardsAnim__S--1 {
+  to {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+@keyframes forwardsAnim__S--2 {
+  to {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+@keyframes backwardsAnim__F--1 {
+  from {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  to {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes backwardsAnim__F--2 {
+  from {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  to {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes backwardsAnim__S--1 {
+  to {
+    top: 90%;
+  }
+}
+
+@keyframes backwardsAnim__S--2 {
+  to {
+    top: 10%;
+  }
+}
+
+// MENU
+@keyframes openMenu {
+  to {
+    transform: translate(-50%, -50%) scale(80);
+  }
+}
+@keyframes hideMenu {
+  from {
+    transform: translate(-50%, -50%) scale(80);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
+
+// LINKS
+@keyframes showLinks {
+  to {
+    opacity: 1;
+    left: 50%;
+  }
+}
+@keyframes hideLinks {
+  from {
+    opacity: 1;
+    left: 50%;
+  }
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}

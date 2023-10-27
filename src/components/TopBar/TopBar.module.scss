@@ -2,8 +2,10 @@
   display: flex;
   padding: 1rem;
   justify-content: space-between;
+  align-items: center;
   &--left,
   &--right {
+    z-index: 1100;
     display: flex;
     gap: 5rem;
   }

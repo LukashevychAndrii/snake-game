@@ -7,7 +7,7 @@
   @include m.absolute-center();
   width: 60rem;
   background-color: v.$c-settings;
-  z-index: 1000;
+  z-index: 1002;
   padding: 0 5rem;
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@
         list-style: none;
         transition: opacity 0.4s;
         width: 100%;
-        z-index: 1500;
+        z-index: 1002;
         & > li {
           text-align: center;
           border: 1px solid;

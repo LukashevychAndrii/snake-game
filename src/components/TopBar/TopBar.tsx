@@ -4,22 +4,24 @@ import Settings from "../Settings/Settings";
 import AuthIcon from "../Auth/AuthIcon";
 import { UserContext } from "../../Context/user-context";
 import BoardIcon from "../Board/BoardIcon/BoardIcon";
+import { useGetWindowWidth } from "../../hooks/useGetWindowWidth";
+import BurgerMenu from "./BurgerMenu/BurgerMenu";
 
 const TopBar = () => {
-  const { connectToAcc } = React.useContext(UserContext);
-  // React.useEffect(() => {
-  //   connectToAcc();
-  // }, []);
-
+  const windowWidth = useGetWindowWidth();
   return (
     <div className={styles["top-bar"]}>
       <div className={styles["top-bar--left"]}>
-        <BoardIcon />
+        {windowWidth > 1100 ? <BoardIcon /> : <Settings />}
       </div>
-      <div className={styles["top-bar--right"]}>
-        <Settings />
-        <AuthIcon />
-      </div>
+      {windowWidth > 1100 ? (
+        <div className={styles["top-bar--right"]}>
+          <Settings />
+          <AuthIcon />
+        </div>
+      ) : (
+        <BurgerMenu />
+      )}
     </div>
   );
 };
