@@ -6,6 +6,7 @@ import {
 } from "./authForm-reducer";
 import { UserContext } from "../../../Context/user-context";
 import { redirect } from "../../../utils/redirect";
+import { useGetWindowWidth } from "../../../hooks/useGetWindowWidth";
 
 interface Props {
   current: "sign-in" | "sign-up";
@@ -120,172 +121,203 @@ const AuthForm: React.FC<Props> = ({ current }) => {
     }
   }
 
+  const handleLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    redirect(
+      current === "sign-in"
+        ? "/snake-game/auth--sign-up"
+        : "/snake-game/auth--sign-in"
+    );
+  };
+  const windowWidth = useGetWindowWidth();
+
   return (
     <>
-      <form onSubmit={submitHandler} className={styles["auth-form"]}>
-        {current === "sign-up" && (
+      <div className={styles["auth-form__wrapper"]}>
+        <form onSubmit={submitHandler} className={styles["auth-form"]}>
+          {current === "sign-up" && (
+            <div
+              className={`${styles["auth-form__component"]} ${
+                state.nameTouched && state.nameError
+                  ? styles["auth-form__component--error"]
+                  : ""
+              }`}
+            >
+              <span
+                className={`${styles["auth-form__component__error-text"]} ${
+                  state.nameError && state.nameTouched
+                    ? styles["auth-form__component__error-text--visible"]
+                    : ""
+                }`}
+              >
+                {state.nameError}
+              </span>
+              <input
+                placeholder=" "
+                value={state.name}
+                onChange={userNameChangeHandler}
+                onBlur={blurHandler}
+                type="text"
+                name="user_name"
+                id="user_name"
+                className={`${styles["auth-form__component__input"]} ${
+                  state.nameTouched && state.nameError
+                    ? styles["auth-form__component__input--error"]
+                    : ""
+                }`}
+              />
+              <label
+                className={`${styles["auth-form__component__label"]} ${
+                  state.nameTouched && state.nameError
+                    ? styles["auth-form__component__label--error"]
+                    : ""
+                }`}
+                htmlFor="user_name"
+              >
+                Name
+              </label>
+            </div>
+          )}
           <div
             className={`${styles["auth-form__component"]} ${
-              state.nameTouched && state.nameError
+              state.emailTouched && state.emailError
                 ? styles["auth-form__component--error"]
                 : ""
             }`}
           >
             <span
               className={`${styles["auth-form__component__error-text"]} ${
-                state.nameError && state.nameTouched
+                state.emailError && state.emailTouched
                   ? styles["auth-form__component__error-text--visible"]
                   : ""
               }`}
             >
-              {state.nameError}
+              {state.emailError}
             </span>
+
             <input
               placeholder=" "
-              value={state.name}
-              onChange={userNameChangeHandler}
+              value={state.email}
+              onChange={emailChangeHandler}
               onBlur={blurHandler}
               type="text"
-              name="user_name"
-              id="user_name"
+              name="user_email"
+              id="user_email"
               className={`${styles["auth-form__component__input"]} ${
-                state.nameTouched && state.nameError
+                state.emailTouched && state.emailError
                   ? styles["auth-form__component__input--error"]
                   : ""
               }`}
             />
             <label
               className={`${styles["auth-form__component__label"]} ${
-                state.nameTouched && state.nameError
+                state.emailTouched && state.emailError
                   ? styles["auth-form__component__label--error"]
                   : ""
               }`}
-              htmlFor="user_name"
+              htmlFor="user_email"
             >
-              Name
+              Email
             </label>
           </div>
-        )}
-        <div
-          className={`${styles["auth-form__component"]} ${
-            state.emailTouched && state.emailError
-              ? styles["auth-form__component--error"]
-              : ""
-          }`}
-        >
-          <span
-            className={`${styles["auth-form__component__error-text"]} ${
-              state.emailError && state.emailTouched
-                ? styles["auth-form__component__error-text--visible"]
-                : ""
-            }`}
-          >
-            {state.emailError}
-          </span>
-
-          <input
-            placeholder=" "
-            value={state.email}
-            onChange={emailChangeHandler}
-            onBlur={blurHandler}
-            type="text"
-            name="user_email"
-            id="user_email"
-            className={`${styles["auth-form__component__input"]} ${
-              state.emailTouched && state.emailError
-                ? styles["auth-form__component__input--error"]
-                : ""
-            }`}
-          />
-          <label
-            className={`${styles["auth-form__component__label"]} ${
-              state.emailTouched && state.emailError
-                ? styles["auth-form__component__label--error"]
-                : ""
-            }`}
-            htmlFor="user_email"
-          >
-            Email
-          </label>
-        </div>
-        <div
-          className={`${styles["auth-form__component"]} ${
-            state.passwordTouched && state.passwordError
-              ? styles["auth-form__component--error"]
-              : ""
-          }`}
-        >
-          <span
-            className={`${styles["auth-form__component__error-text"]} ${
-              state.passwordError && state.passwordTouched
-                ? styles["auth-form__component__error-text--visible"]
-                : ""
-            }`}
-          >
-            {state.passwordError}
-          </span>
-
-          <input
-            placeholder=" "
-            value={state.password}
-            onChange={passChangeHandler}
-            onBlur={blurHandler}
-            type="text"
-            name="user_password"
-            id="user_password"
-            className={`${styles["auth-form__component__input"]} ${
+          <div
+            className={`${styles["auth-form__component"]} ${
               state.passwordTouched && state.passwordError
-                ? styles["auth-form__component__input--error"]
+                ? styles["auth-form__component--error"]
                 : ""
             }`}
-          />
-          <label
-            className={`${styles["auth-form__component__label"]} ${
-              state.passwordTouched && state.passwordError
-                ? styles["auth-form__component__label--error"]
-                : ""
-            }`}
-            htmlFor="user_password"
           >
-            Password
-          </label>
-        </div>
-        <button
-          disabled={!state.formValid}
-          className={styles["btn-pink"]}
-          type="submit"
-        >
-          {current === "sign-in" ? "Sign In" : "Sign Up"}
-        </button>
-      </form>
-      <div className={styles["auth-form__links"]}></div>
-      <div className={styles["auth-form__links__wrapper"]}>
-        <div className={styles["auth-form__links__link__wrapper"]}>
-          <span className={styles["auth-form__links__text"]}>
-            {current === "sign-in"
-              ? "Don't have an account?"
-              : "Already have an account?"}
-          </span>
-          <a
-            className={`${styles["auth-form__links__link"]} ${styles["btn-light"]}`}
-            onClick={(e) => {
-              e.preventDefault();
-              redirect(
+            <span
+              className={`${styles["auth-form__component__error-text"]} ${
+                state.passwordError && state.passwordTouched
+                  ? styles["auth-form__component__error-text--visible"]
+                  : ""
+              }`}
+            >
+              {state.passwordError}
+            </span>
+
+            <input
+              placeholder=" "
+              value={state.password}
+              onChange={passChangeHandler}
+              onBlur={blurHandler}
+              type="text"
+              name="user_password"
+              id="user_password"
+              className={`${styles["auth-form__component__input"]} ${
+                state.passwordTouched && state.passwordError
+                  ? styles["auth-form__component__input--error"]
+                  : ""
+              }`}
+            />
+            <label
+              className={`${styles["auth-form__component__label"]} ${
+                state.passwordTouched && state.passwordError
+                  ? styles["auth-form__component__label--error"]
+                  : ""
+              }`}
+              htmlFor="user_password"
+            >
+              Password
+            </label>
+          </div>
+          <button
+            disabled={!state.formValid}
+            className={styles["btn-pink"]}
+            type="submit"
+          >
+            {current === "sign-in" ? "Sign In" : "Sign Up"}
+          </button>
+        </form>
+        {windowWidth <= 1100 && (
+          <div className={styles["auth-form__link__wrapper"]}>
+            <span>
+              {current === "sign-in"
+                ? "Don't have an account?"
+                : "Already have an account?"}
+            </span>
+            <a
+              href={`${
                 current === "sign-in"
                   ? "/snake-game/auth--sign-up"
                   : "/snake-game/auth--sign-in"
-              );
-            }}
-            href={`${
-              current === "sign-in"
-                ? "/snake-game/auth--sign-up"
-                : "/snake-game/auth--sign-in"
-            }`}
-          >
-            {current === "sign-in" ? "Sign Up" : "Sign In"}
-          </a>
-        </div>
+              }`}
+              className={styles["auth-form__link"]}
+              onClick={handleLinkClick}
+            >
+              {current === "sign-in" ? "Sign Up" : "Sign In"}
+            </a>
+          </div>
+        )}
       </div>
+      {windowWidth > 1100 && (
+        <div className={styles["auth-form__bg"]}>
+          <div className={styles["auth-form__bg__links"]}></div>
+          <div className={styles["auth-form__bg__links__wrapper"]}>
+            <div className={styles["auth-form__bg__links__link__wrapper"]}>
+              <span className={styles["auth-form__bg__links__text"]}>
+                {current === "sign-in"
+                  ? "Don't have an account?"
+                  : "Already have an account?"}
+              </span>
+              <a
+                className={styles["btn-light"]}
+                onClick={handleLinkClick}
+                href={`${
+                  current === "sign-in"
+                    ? "/snake-game/auth--sign-up"
+                    : "/snake-game/auth--sign-in"
+                }`}
+              >
+                {current === "sign-in" ? "Sign Up" : "Sign In"}
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
