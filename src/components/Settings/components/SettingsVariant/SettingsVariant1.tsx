@@ -34,15 +34,14 @@ const SettingsVariant1: React.FC<props> = ({
       <form ref={ref} id={variantType}>
         <input
           checked={checked}
+          onChange={() => {
+            setChecked(!checked);
+          }}
           type="checkbox"
           name={variantType}
           id={variantType}
         />
-        <label
-          ref={labelRef}
-          onClick={() => setChecked(!checked)}
-          htmlFor={variantType}
-        >
+        <label ref={labelRef} htmlFor={variantType}>
           <div style={{ display: "flex", alignItems: "center" }}>
             {currentValue}
           </div>
