@@ -7,6 +7,7 @@ import { BoardProvider } from "./Context/board-context";
 import { SettingsProvider } from "./Context/settings-context";
 import { UserProvider } from "./Context/user-context";
 import { LoadingProvider } from "./Context/loading-context";
+import { DirectionProvider } from "./Context/direction-context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +17,9 @@ root.render(
     <SettingsProvider>
       <UserProvider>
         <LoadingProvider>
-          <App />
+          <DirectionProvider>
+            <App />
+          </DirectionProvider>
         </LoadingProvider>
       </UserProvider>
     </SettingsProvider>

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Board.module.scss";
 import Cell from "./Cell/Cell";
-import useArrowKeyPress from "../../hooks/useArrowKeyPress";
+import useGetDirection from "../../hooks/useGetDirection";
 import createBoard from "../../utils/createBoard";
 import getRandomCell from "../../utils/getRandomCell";
 import End from "./GameState/End/End";
@@ -20,9 +20,15 @@ interface props {
   boardSize: boardSize;
   rowsAndCols: RowsAndCols;
   boardSnakeSpeed: boardSnakeSpeed;
+  isTouchDevice: boolean;
 }
 
-const Board = ({ boardSize, boardSnakeSpeed, rowsAndCols }: props) => {
+const Board = ({
+  boardSize,
+  boardSnakeSpeed,
+  rowsAndCols,
+  isTouchDevice,
+}: props) => {
   const [counter, setCounter] = React.useState(0); // !!!!!!!
   const [cellsRows] = React.useState(new Map<number, number>(null));
   const [snake, setSnake] = React.useState<Snake>(new Snake(2, rowsAndCols));
@@ -58,7 +64,7 @@ const Board = ({ boardSize, boardSnakeSpeed, rowsAndCols }: props) => {
     // return () => clearInterval(interval);
   }, [emptyCells, foodCells, gameState, counter]);
 
-  const arrowPress = useArrowKeyPress(gameState);
+  const arrowPress = useGetDirection({ gameState, isTouchDevice });
 
   const moove = () => {
     switch (arrowPress) {
