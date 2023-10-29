@@ -2,17 +2,17 @@ import React from "react";
 import styles from "../Board.module.scss";
 import { BoardContext } from "../../../Context/board-context";
 import snakeHead from "../../../imgs/snake-head.png";
-import { direction } from "../../../hooks/useArrowKeyPress";
+import { Direction } from "../../../types/direction";
 
 interface props {
   snakeCell: boolean;
   foodCell: boolean;
   getEatenCell: () => void;
   headCell: boolean;
-  direction: direction | null;
+  direction: Direction | null;
 }
 
-function getRotateDeg(direction: direction): number {
+function getRotateDeg(direction: Direction): number {
   switch (direction) {
     case "up":
       return 180;
