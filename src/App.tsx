@@ -51,6 +51,10 @@ function App() {
   }, [currentUrl]);
 
   React.useEffect(() => {
+    console.log(isAuth);
+  }, [isAuth]);
+
+  React.useEffect(() => {
     if (loadingSettingsQueue > 0) {
       setComponentToRender(<LoadingBar />);
     } else {

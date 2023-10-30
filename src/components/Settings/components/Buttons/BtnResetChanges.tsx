@@ -4,23 +4,20 @@ import { BoardContext } from "../../../../Context/board-context";
 import { SettingsContext } from "../../../../Context/settings-context";
 import useGetAreSettingsDefault from "../../../../hooks/useGetAreSettingsDefault";
 import { setDefaultSettings } from "../../../../firebase/functions/settings/setDefaultSettings";
+import { defaultSettings } from "../../../../utils/defaultSettings";
+import { UserContext } from "../../../../Context/user-context";
 
 const BtnResetChanges = () => {
   const { resetSettings } = React.useContext(BoardContext);
   const { discardChanges } = React.useContext(SettingsContext);
+  const { isAuth } = React.useContext(UserContext);
 
   const settingsDefault = useGetAreSettingsDefault();
 
   const btnResetClick = () => {
     setDefaultSettings();
-    resetSettings();
-    discardChanges({
-      boardColor: "default",
-      boardFoodColor: "default",
-      boardSize: "default",
-      boardSnakeColor: "default",
-      boardSnakeSpeed: "default",
-    });
+    resetSettings(true, isAuth);
+    discardChanges(defaultSettings);
   };
   return (
     <button

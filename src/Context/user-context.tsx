@@ -13,7 +13,7 @@ export interface User {
   userUpdateEmail: ({ email }: Auth_E) => void;
   userSignUp: ({ name, email, password }: Auth_NEP) => void;
   userSignIn: ({ email, password }: Auth_EP) => void;
-  userSignOut: () => void;
+  userSignOut: () => Promise<void>;
   connectToAcc: (removeFormSettingsQueue?: () => void) => void;
   isAuth: boolean;
 }
@@ -25,7 +25,9 @@ const user: User = {
   userUpdateEmail() {},
   userSignIn() {},
   userSignUp() {},
-  userSignOut() {},
+  userSignOut() {
+    return new Promise<void>(() => {});
+  },
   connectToAcc() {},
   isAuth: false,
 };
@@ -37,16 +39,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function userSignUp({ name, email, password }: Auth_NEP) {
     await SignUp({ name, email, password, dispatch });
-    state.isAuth = true;
   }
   async function userSignIn({ email, password }: Auth_EP) {
     await SignIn({ email, password, dispatch });
-    state.isAuth = true;
   }
 
-  async function userSignOut() {
+  async function userSignOut(): Promise<void> {
     await SignOut({ dispatch });
-    state.isAuth = false;
   }
 
   async function userUpdateName({ name }: Auth_N) {
@@ -58,7 +57,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function connectToAcc() {
     await autoLogin({ dispatch });
-    state.isAuth = true;
   }
 
   return (

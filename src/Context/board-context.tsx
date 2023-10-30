@@ -5,7 +5,6 @@ import { color } from "../types/color";
 import { boardSnakeSpeed } from "../types/boardSnakeSpeed";
 import { setSettings } from "../firebase/functions/settings/setSettings";
 import { setMaxScore } from "../firebase/functions/score/setMaxScore";
-import { UserContext } from "./user-context";
 import { setDefaultSettings } from "../firebase/functions/settings/setDefaultSettings";
 
 export interface BoardSettingsI {
@@ -29,9 +28,13 @@ export interface BoardContextI {
   scoreCurrent: number;
   updateScoreCurrent: (newScoreCurrent: number) => void;
   boardSettings: BoardSettingsI;
-  updateBoardSettings: (newBoardSettings: BoardSettingsI) => void;
+  updateBoardSettings: (
+    newBoardSettings: BoardSettingsI,
+    isAuth: boolean
+  ) => void;
   setBoardSettings: (boardSettings: BoardSettingsI) => void;
-  resetSettings: () => void;
+  resetSettings: (request: boolean, isAuth: boolean) => void;
+  resetScoreMax: () => void;
 }
 
 export const BoardContextValues: BoardContextI = {
@@ -43,6 +46,7 @@ export const BoardContextValues: BoardContextI = {
   updateBoardSettings: () => {},
   setBoardSettings: () => {},
   resetSettings: () => {},
+  resetScoreMax() {},
 };
 
 export const BoardContext =
@@ -50,8 +54,6 @@ export const BoardContext =
 
 export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = React.useReducer(boardReducer, BoardContextValues);
-
-  const { isAuth } = React.useContext(UserContext);
 
   const updateScoreMax = (newScoreMax: number): void => {
     if (newScoreMax && newScoreMax > state.scoreMax) {
@@ -71,15 +73,20 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
 
   // set temporary settings
   const updateBoardSettings = async (
-    newBoardSettings: BoardSettingsI
+    newBoardSettings: BoardSettingsI,
+    isAuth: boolean
   ): Promise<void> => {
+    console.log(newBoardSettings);
     if (isAuth) await setSettings({ newBoardSettings });
 
     dispatch({ type: "SET_BOARD_SETTINGS", payload: newBoardSettings });
   };
 
-  const resetSettings = async (): Promise<void> => {
-    if (isAuth) await setDefaultSettings();
+  const resetSettings = async (
+    request: boolean,
+    isAuth: boolean
+  ): Promise<void> => {
+    if (isAuth && request) await setDefaultSettings();
 
     dispatch({
       type: "RESET_SETTINGS",
@@ -90,6 +97,10 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   // Set board settings
   const setBoardSettings = (boardSettings: BoardSettingsI): void => {
     dispatch({ type: "SET_BOARD_SETTINGS", payload: boardSettings });
+  };
+
+  const resetScoreMax = () => {
+    dispatch({ type: "RESET_SCORE_MAX", payload: 0 });
   };
 
   return (
@@ -103,6 +114,7 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
         updateBoardSettings,
         setBoardSettings,
         resetSettings,
+        resetScoreMax,
       }}
     >
       {children}

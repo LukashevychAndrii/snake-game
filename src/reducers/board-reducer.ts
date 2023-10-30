@@ -4,7 +4,8 @@ export type boardAction =
   | { type: "SET_CURRENT_SCORE"; payload: number }
   | { type: "SET_MAX_SCORE"; payload: number }
   | { type: "SET_BOARD_SETTINGS"; payload: BoardSettingsI }
-  | { type: "RESET_SETTINGS"; payload: "default" };
+  | { type: "RESET_SETTINGS"; payload: "default" }
+  | { type: "RESET_SCORE_MAX"; payload: 0 };
 
 export const boardReducer = (state: BoardContextI, action: boardAction) => {
   switch (action.type) {
@@ -24,6 +25,12 @@ export const boardReducer = (state: BoardContextI, action: boardAction) => {
           boardSnakeColor: action.payload,
           boardSnakeSpeed: action.payload,
         },
+      };
+    }
+    case "RESET_SCORE_MAX": {
+      return {
+        ...state,
+        scoreMax: action.payload,
       };
     }
     default:
