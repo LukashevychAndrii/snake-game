@@ -24,7 +24,6 @@ const SwipeHandler = ({ children }: Props) => {
     },
   });
   const { setDirection: changeDirection } = React.useContext(DirectionContext);
-  console.log("qweasd");
   React.useEffect(() => {
     if (direction) changeDirection(direction);
   }, [direction]);

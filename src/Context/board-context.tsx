@@ -76,7 +76,6 @@ export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     newBoardSettings: BoardSettingsI,
     isAuth: boolean
   ): Promise<void> => {
-    console.log(newBoardSettings);
     if (isAuth) await setSettings({ newBoardSettings });
 
     dispatch({ type: "SET_BOARD_SETTINGS", payload: newBoardSettings });

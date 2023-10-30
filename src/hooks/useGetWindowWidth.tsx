@@ -7,7 +7,6 @@ export function useGetWindowWidth() {
 
   React.useEffect(() => {
     function handleResize() {
-      console.log(window.innerWidth);
       setWindowWidth(window.innerWidth);
     }
 
