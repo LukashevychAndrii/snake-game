@@ -5,11 +5,10 @@ import { getScoreMax } from "../firebase/functions/score/getMaxScore";
 const useSetMaxScore = () => {
   const { updateScoreMax } = React.useContext(BoardContext);
 
-  async function getScore() {
+  async function getScore(force?: boolean) {
     const maxScore = await getScoreMax();
-    console.log(maxScore);
     if (maxScore) {
-      updateScoreMax(maxScore);
+      updateScoreMax(maxScore, force);
     }
   }
 

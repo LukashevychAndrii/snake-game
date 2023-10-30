@@ -97,7 +97,7 @@ function App() {
         }
       };
       fetch();
-      getMaxScore();
+      getMaxScore(true);
     }
   }, [isAuth]);
 

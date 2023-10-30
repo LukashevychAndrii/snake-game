@@ -24,7 +24,7 @@ const DefaultSettings: BoardSettingsI = {
 };
 export interface BoardContextI {
   scoreMax: number;
-  updateScoreMax: (newScoreMax: number) => void;
+  updateScoreMax: (newScoreMax: number, force?: boolean) => void;
   scoreCurrent: number;
   updateScoreCurrent: (newScoreCurrent: number) => void;
   boardSettings: BoardSettingsI;
@@ -55,8 +55,8 @@ export const BoardContext =
 export const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = React.useReducer(boardReducer, BoardContextValues);
 
-  const updateScoreMax = (newScoreMax: number): void => {
-    if (newScoreMax && newScoreMax > state.scoreMax) {
+  const updateScoreMax = (newScoreMax: number, force?: boolean): void => {
+    if (newScoreMax && (newScoreMax > state.scoreMax || force)) {
       setMaxScore(newScoreMax);
       dispatch({
         type: "SET_MAX_SCORE",

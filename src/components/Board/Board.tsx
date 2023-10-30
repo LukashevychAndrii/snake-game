@@ -13,6 +13,7 @@ import { setEmptyCells } from "../../utils/setEmptyCells";
 import { boardSize } from "../../types/boardSize";
 import { RowsAndCols } from "../../types/rowsAndCols";
 import { boardSnakeSpeed } from "../../types/boardSnakeSpeed";
+import { UserContext } from "../../Context/user-context";
 
 export type gameState = "start" | "playing" | "end";
 
