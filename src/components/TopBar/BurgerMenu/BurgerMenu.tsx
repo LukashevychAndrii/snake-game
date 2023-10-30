@@ -19,17 +19,21 @@ const BurgerMenu = () => {
   }
 
   React.useEffect(() => {
+    let timeout: any;
     if (!first) {
       if (showMenu) {
         setShowMenuAnim("show");
         setShowLinks(true);
       } else {
         setShowMenuAnim("hide");
-        setTimeout(() => {
+        timeout = setTimeout(() => {
           setShowLinks(false);
         }, 1000);
       }
     }
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [showMenu]);
 
   const { isAuth } = React.useContext(UserContext);
@@ -94,6 +98,8 @@ const BurgerMenu = () => {
             type="checkbox"
             name="burger-menu"
             id="burger-menu"
+            checked={showMenu}
+            onChange={() => {}}
           />
           <label htmlFor="burger-menu">
             <div
