@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./End.module.scss";
 
-import lose from "../../../../imgs/lose.png";
 import { gameState } from "../../Board";
 
 export type end = "loss" | "win";
@@ -25,7 +24,6 @@ const End: React.FC<props> = ({ getGameState, end }) => {
           >
             start new game
           </button>
-          <img className={styles["end__img"]} src={lose} alt="lose"></img>
         </>
       ) : (
         <>

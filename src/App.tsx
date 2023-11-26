@@ -14,7 +14,6 @@ import LoadingBar from "./components/Loading/LoadingBar";
 import useSetMaxScore from "./hooks/useSetMaxScore";
 import BoardWrapper from "./components/Board/BoardWrapper";
 import { redirect } from "./utils/redirect";
-import { useGetWindowWidth } from "./hooks/useGetWindowWidth";
 
 function App() {
   const [currentUrl, setCurrentUrl] = React.useState<URL>(
