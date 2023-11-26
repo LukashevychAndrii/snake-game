@@ -7,18 +7,27 @@
   grid-template-columns: repeat(20, 1fr);
   z-index: 10;
   gap: 0.1vw;
+  width: 500px;
+  height: 500px;
 
+  @media screen and (max-width: 550px) {
+    width: 100vw;
+    height: 100vw;
+  }
   &__wrapper {
-    @include m.absolute-center();
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     @media screen and (max-width: 700px) {
-      top: 75vw;
+      // top: 75vw;
     }
     @media screen and (max-width: 450px) {
-      top: 85vw;
+      // top: 85vw;
     }
   }
 
@@ -26,12 +35,12 @@
     border: 1px solid v.$c-main;
     color: rgb(126, 126, 126);
     position: relative;
-    width: v.$bcs-default;
-    height: v.$bcs-default;
+    // width: v.$bcs-default;
+    // height: v.$bcs-default;
 
     @media screen and (max-width: 700px) {
-      width: v.$bcs-small;
-      height: v.$bcs-small;
+      // width: v.$bcs-small;
+      // height: v.$bcs-small;
     }
     &--snake {
       background-color: v.$c-snake;

@@ -4,7 +4,9 @@
 @use "../../styles/components";
 
 .settings {
-  @include m.absolute-center();
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 60rem;
   background-color: v.$c-settings;
   z-index: 1002;
@@ -12,18 +14,10 @@
   display: flex;
   flex-direction: column;
   gap: 5rem;
-  @media screen and (max-width: 1000px) {
-    width: 70vw;
-  }
-  @media screen and (max-width: 700px) {
-    top: 75vw;
-  }
+  top: 5.5rem;
   @media screen and (max-width: 550px) {
     width: 90vw;
     gap: 4rem;
-  }
-  @media screen and (max-width: 450px) {
-    top: 100vw;
   }
   &--hidden {
     animation: hide 0.4s forwards;

@@ -10,19 +10,23 @@ import BurgerMenu from "./BurgerMenu/BurgerMenu";
 const TopBar = () => {
   const windowWidth = useGetWindowWidth();
   return (
-    <div className={styles["top-bar"]}>
-      <div className={styles["top-bar--left"]}>
-        {windowWidth > 1100 ? <BoardIcon /> : <Settings />}
-      </div>
-      {windowWidth > 1100 ? (
-        <div className={styles["top-bar--right"]}>
-          <Settings />
-          <AuthIcon />
+    <>
+      {windowWidth > 750 && (
+        <div className={styles["top-bar"]}>
+          <div className={styles["top-bar--left"]}>
+            {windowWidth > 1100 ? <BoardIcon /> : <Settings />}
+          </div>
+          {windowWidth > 1100 ? (
+            <div className={styles["top-bar--right"]}>
+              <Settings />
+              <AuthIcon />
+            </div>
+          ) : (
+            <BurgerMenu />
+          )}
         </div>
-      ) : (
-        <BurgerMenu />
       )}
-    </div>
+    </>
   );
 };
 
